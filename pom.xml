@@ -66,7 +66,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                haypsilcn.hotelmanagementsystem/haypsilcn.hotelmanagementsystem.HelloApplication
+                                haypsilcn.hotelmanagementsystem/haypsilcn.hotelmanagementsystem.MainApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

@@ -7,4 +7,5 @@ module haypsilcn.hotelmanagementsystem {
 
     opens haypsilcn.hotelmanagementsystem to javafx.fxml;
     exports haypsilcn.hotelmanagementsystem;
+    exports haypsilcn.hotelmanagementsystem.login;
 }

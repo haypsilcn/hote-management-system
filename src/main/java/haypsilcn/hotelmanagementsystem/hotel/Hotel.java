@@ -1,6 +1,7 @@
 package haypsilcn.hotelmanagementsystem.hotel;
 
 import haypsilcn.hotelmanagementsystem.customer.Customer;
+import haypsilcn.hotelmanagementsystem.database.Database;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -8,10 +9,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Hotel {
-    private String database = "jdbc:mariadb://localhost/hotel-db";
-    private String username = "root";
-    private String password = "root";
+public class Hotel implements Database {
+
 
     private final ArrayList<Room> roomsList = new ArrayList<>();
     private final ArrayList<Customer> customersList = new ArrayList<>();

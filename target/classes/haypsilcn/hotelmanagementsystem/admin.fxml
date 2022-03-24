@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="root" prefHeight="780.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="haypsilcn.hotelmanagementsystem.AdminController">
+   <children>
+      <Text fx:id="welcomeText" layoutX="-1.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="1506.9195861816406">
+         <font>
+            <Font name="System Bold Italic" size="45.0" />
+         </font>
+      </Text>
+      <MenuBar fx:id="menuBar" layoutY="1.0" prefHeight="26.0" prefWidth="1507.0">
+      </MenuBar>
+      <TableView fx:id="adminTable" layoutX="130.0" layoutY="215.0" prefHeight="310.0" prefWidth="228.0">
+      </TableView>
+   </children>
+</AnchorPane>
