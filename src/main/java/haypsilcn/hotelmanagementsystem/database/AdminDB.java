@@ -71,7 +71,7 @@ public class AdminDB implements Database{
     }
 
     public ResultSet showAllExcept(Admin admin) throws SQLException {
-        query = "SELECT * FROM admin WHERE admin.user != '" + admin.getUsername() + "'";
+        query = "SELECT * FROM admin WHERE admin.user != '" + admin.getUsername() + "' ORDER BY id";
         resultSet = connection.createStatement().executeQuery(query);
         return resultSet;
     }

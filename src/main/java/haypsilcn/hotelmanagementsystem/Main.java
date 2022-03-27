@@ -13,10 +13,17 @@ public class Main {
 
 //        Hotel hotel = new Hotel();
 
-        AdminDB adminDB = new AdminDB();
+        /*AdminDB adminDB = new AdminDB();
         Admin admin = new Admin("test", "1245");
         adminDB.loginAuthorize(admin);
-        adminDB.updatePassword(admin, "124533333");
+        adminDB.updatePassword(admin, "124533333");*/
+
+        Connection connection = DriverManager.getConnection("jdbc:mariadb://localhost/hotel-db", "root", "root");
+        String query = "SELECT DISTINCT r.*, cr.roomNr FROM room r LEFt JOIN  customer_room cr on r.roomNr = cr.roomNr WHERE cr.roomNr IS NULL";
+        ResultSet resultSet = connection.createStatement().executeQuery(query);
+        while (resultSet.next())
+            System.out.println(resultSet.getInt(1));
+
 
     }
 }
