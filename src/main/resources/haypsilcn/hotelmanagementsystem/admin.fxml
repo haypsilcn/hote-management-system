@@ -1,232 +1,838 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="root" prefHeight="780.0" prefWidth="1500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="haypsilcn.hotelmanagementsystem.AdminController">
-   <children>
-      <Text fx:id="welcomeText" layoutX="-1.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="1506.9195861816406">
-         <font>
-            <Font name="System Bold Italic" size="45.0" />
-         </font>
-      </Text>
-      <MenuBar fx:id="menuBar" layoutY="1.0" prefHeight="26.0" prefWidth="1507.0">
-      </MenuBar>
-      <TabPane fx:id="tabPane" layoutY="205.0" prefHeight="576.0" prefWidth="793.0" tabClosingPolicy="UNAVAILABLE" />
-      <TextField fx:id="search" layoutX="62.0" layoutY="136.0" prefHeight="40.0" prefWidth="691.0">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </TextField>
-      <Button fx:id="searchButton" layoutX="799.0" layoutY="138.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="110.0" text="Search">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Button>
-      <TabPane fx:id="addTabPane" layoutX="803.0" layoutY="206.0" prefHeight="576.0" prefWidth="703.0" tabClosingPolicy="UNAVAILABLE">
-        <tabs>
-            <Tab fx:id="newAdminTab" text="new admin">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Label layoutX="14.0" layoutY="63.0" prefHeight="40.0" prefWidth="100.0" text="Username">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="newUsernameTextField" layoutX="218.0" layoutY="60.0" prefHeight="40.0" prefWidth="460.0">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </TextField>
-                        <Label layoutX="14.0" layoutY="137.0" prefHeight="40.0" prefWidth="100.0" text="Password">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <PasswordField fx:id="passwordField" layoutX="218.0" layoutY="135.0" prefHeight="40.0" prefWidth="460.0">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </PasswordField>
-                        <PasswordField fx:id="confirmPass" layoutX="218.0" layoutY="210.0" prefHeight="40.0" prefWidth="460.0">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </PasswordField>
-                        <Label layoutX="14.0" layoutY="212.0" prefHeight="40.0" prefWidth="168.0" text="Confirm password">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Button fx:id="newAdminButton" layoutX="578.0" layoutY="474.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Add">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </AnchorPane>
-              </content>
-            </Tab>
-            <Tab fx:id="newEmployeeTab" text="new employee">
-               <content>
+<AnchorPane fx:id="root" prefHeight="900.0" prefWidth="1800.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="haypsilcn.hotelmanagementsystem.AdminController">
+   <Text fx:id="welcomeText" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="699.9999999999998">
+      <font>
+         <Font name="System Bold Italic" size="45.0" />
+      </font>
+   </Text>
+   <MenuBar fx:id="menuBar" layoutY="1.0" prefHeight="26.0" prefWidth="571.0">
+   </MenuBar>
+   <TabPane fx:id="tabPane" layoutY="200.0" prefHeight="700.0" prefWidth="700.0" tabClosingPolicy="UNAVAILABLE" />
+   <TextField fx:id="search" layoutX="62.0" layoutY="136.0" prefHeight="43.0" prefWidth="501.0">
+      <font>
+         <Font size="20.0" />
+      </font>
+   </TextField>
+   <Button fx:id="searchButton" layoutX="42.0" layoutY="81.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="110.0" text="Search">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Button>
+   <TabPane fx:id="addTabPane" layoutX="705.0" prefHeight="900.0" prefWidth="1095.0" tabClosingPolicy="UNAVAILABLE">
+      <Tab fx:id="newAdminTab" text="new admin">
+         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+            <Label layoutX="62.0" layoutY="115.0" prefHeight="40.0" prefWidth="100.0" text="Username">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="newUsernameTextField" layoutX="266.0" layoutY="112.0" prefHeight="40.0" prefWidth="460.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <Label layoutX="62.0" layoutY="189.0" prefHeight="40.0" prefWidth="100.0" text="Password">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="passwordField" layoutX="266.0" layoutY="187.0" prefHeight="40.0" prefWidth="460.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </PasswordField>
+            <PasswordField fx:id="confirmPass" layoutX="266.0" layoutY="262.0" prefHeight="40.0" prefWidth="460.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </PasswordField>
+            <Label layoutX="62.0" layoutY="264.0" prefHeight="40.0" prefWidth="168.0" text="Confirm password">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Button fx:id="newAdminButton" layoutX="950.0" layoutY="750.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Add">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+         </AnchorPane>
+      </Tab>
+      <Tab fx:id="newEmployeeTab" text="new employee">
+         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+            <Label layoutX="74.0" layoutY="99.0" prefHeight="40.0" prefWidth="121.0" text="First name">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="employeeFirstName" layoutX="278.0" layoutY="96.0" prefHeight="40.0" prefWidth="460.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <Label layoutX="74.0" layoutY="173.0" prefHeight="40.0" prefWidth="100.0" text="Last name">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <TextField fx:id="employeeLastName" layoutX="278.0" layoutY="171.0" prefHeight="40.0" prefWidth="460.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <Label layoutX="74.0" layoutY="246.0" prefHeight="40.0" prefWidth="168.0" text="DoB">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="employeeDoB" layoutX="278.0" layoutY="246.0" prefHeight="40.0" prefWidth="198.0" />
+            <Label layoutX="74.0" layoutY="321.0" prefHeight="40.0" prefWidth="100.0" text="Gender">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="employeeGender" layoutX="278.0" layoutY="321.0" prefHeight="40.0" prefWidth="76.0" />
+            <Label layoutX="74.0" layoutY="396.0" prefHeight="40.0" prefWidth="143.0" text="Department">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="employeeDepartment" layoutX="278.0" layoutY="396.0" prefHeight="40.0" prefWidth="150.0" />
+            <Button fx:id="newEmployeeButton" layoutX="950.0" layoutY="750.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Add">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+         </AnchorPane>
+      </Tab>
+      <Tab fx:id="newRoomTab" text="new room">
+         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+            <TextField fx:id="roomNrTextField" layoutX="260.0" layoutY="215.0" prefHeight="40.0" prefWidth="460.0">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <Label layoutX="56.0" layoutY="292.0" prefHeight="40.0" prefWidth="100.0" text="Type">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="56.0" layoutY="217.0" prefHeight="40.0" prefWidth="168.0" text="Room number">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="roomType" layoutX="260.0" layoutY="292.0" prefHeight="40.0" prefWidth="150.0" />
+            <Button fx:id="newRoomButton" layoutX="950.0" layoutY="750.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Add">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Button>
+         </AnchorPane>
+      </Tab>
+      <Tab fx:id="checkInTab" text="checkin">
+         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+            <TabPane prefHeight="870.0" prefWidth="1095.0" tabClosingPolicy="UNAVAILABLE">
+               <Tab fx:id="singleRoomTab" text="Single room">
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Label layoutX="14.0" layoutY="29.0" prefHeight="40.0" prefWidth="121.0" text="First name">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="employeeFirstName" layoutX="218.0" layoutY="26.0" prefHeight="40.0" prefWidth="460.0">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </TextField>
-                        <Label layoutX="14.0" layoutY="103.0" prefHeight="40.0" prefWidth="100.0" text="Last name">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="employeeLastName" layoutX="218.0" layoutY="101.0" prefHeight="40.0" prefWidth="460.0">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </TextField>
-                        <Label layoutX="14.0" layoutY="176.0" prefHeight="40.0" prefWidth="168.0" text="DoB">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <DatePicker fx:id="employeeDoB" layoutX="218.0" layoutY="176.0" prefHeight="40.0" prefWidth="198.0" />
-                        <Label layoutX="14.0" layoutY="251.0" prefHeight="40.0" prefWidth="100.0" text="Gender">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <ComboBox fx:id="employeeGender" layoutX="218.0" layoutY="251.0" prefHeight="40.0" prefWidth="76.0" />
-                        <Label layoutX="14.0" layoutY="326.0" prefHeight="40.0" prefWidth="143.0" text="Department">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <ComboBox fx:id="employeeDepartment" layoutX="218.0" layoutY="326.0" prefHeight="40.0" prefWidth="150.0" />
-                        <Button fx:id="newEmployeeButton" layoutX="578.0" layoutY="474.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Add">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Button>
-                     </children>
+                     <Label layoutX="80.0" layoutY="96.0" prefHeight="40.0" prefWidth="121.0" text="First name">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <TextField fx:id="singleFirstName" layoutX="356.0" layoutY="94.0" prefHeight="40.0" prefWidth="300.0">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </TextField>
+                     <Label layoutX="80.0" layoutY="160.0" prefHeight="40.0" prefWidth="100.0" text="Last name">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <TextField fx:id="singleLastName" layoutX="356.0" layoutY="158.0" prefHeight="40.0" prefWidth="300.0">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </TextField>
+                     <Label layoutX="80.0" layoutY="222.0" prefHeight="40.0" prefWidth="168.0" text="DoB">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <DatePicker fx:id="singleDoB" layoutX="356.0" layoutY="222.0" prefHeight="40.0" prefWidth="150.0" />
+                     <Label layoutX="80.0" layoutY="282.0" prefHeight="40.0" prefWidth="100.0" text="Gender">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <ComboBox fx:id="singleGender" layoutX="356.0" layoutY="282.0" prefHeight="40.0" prefWidth="80.0" />
+                     <Label layoutX="80.0" layoutY="465.0" prefHeight="40.0" prefWidth="143.0" text="Room number">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <Label layoutX="80.0" layoutY="404.0" prefHeight="40.0" prefWidth="143.0" text="Check-out">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <Label layoutX="80.0" layoutY="343.0" prefHeight="40.0" prefWidth="143.0" text="Check-in">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <DatePicker fx:id="singleCheckIn" layoutX="356.0" layoutY="343.0" prefHeight="40.0" prefWidth="150.0" />
+                     <DatePicker fx:id="singleCheckOut" layoutX="356.0" layoutY="404.0" prefHeight="40.0" prefWidth="150.0" />
+                     <Button fx:id="singleRoomButton" layoutX="950.0" layoutY="750.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Add">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Button>
+                     <ComboBox fx:id="singleRoomNr" layoutX="356.0" layoutY="465.0" prefHeight="40.0" prefWidth="150.0" />
                   </AnchorPane>
-               </content>
-            </Tab>
-            <Tab fx:id="newRoomTab" text="new room">
-               <content>
+               </Tab>
+               <Tab fx:id="doubleRoomTab" text="Double room">
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <TextField fx:id="roomTextField" layoutX="218.0" layoutY="60.0" prefHeight="40.0" prefWidth="460.0">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </TextField>
-                        <Label layoutX="14.0" layoutY="137.0" prefHeight="40.0" prefWidth="100.0" text="Type">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="14.0" layoutY="62.0" prefHeight="40.0" prefWidth="168.0" text="Room number">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <ComboBox fx:id="roomType" layoutX="218.0" layoutY="137.0" prefHeight="40.0" prefWidth="150.0" />
-                        <Button fx:id="newRoomButton" layoutX="578.0" layoutY="474.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Add">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Button>
-                     </children>
+                     <Label layoutX="50.0" layoutY="50.0" prefHeight="40.0" prefWidth="121.0" text="First name">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <TextField fx:id="doubleFirstName1" layoutX="50.0" layoutY="90.0" prefHeight="40.0"
+                                prefWidth="200.0">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </TextField>
+                     <Label layoutX="325.0" layoutY="50.0" prefHeight="40.0" prefWidth="100.0" text="Last name">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <TextField fx:id="doubleLastName1" layoutX="325.0" layoutY="90.0" prefHeight="40.0"
+                                prefWidth="200.0">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </TextField>
+                     <Label layoutX="50.0" layoutY="153.0" prefHeight="40.0" prefWidth="59.0" text="DoB">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <DatePicker fx:id="doubleDoB1" layoutX="100.0" layoutY="153.0" prefHeight="40.0"
+                                 prefWidth="150.0"/>
+                     <Label layoutX="327.0" layoutY="153.0" prefHeight="40.0" prefWidth="81.0" text="Gender">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <ComboBox fx:id="doubleGender1" layoutX="445.0" layoutY="153.0" prefHeight="40.0"
+                               prefWidth="80.0"/>
+                     <Label layoutX="17.0" layoutY="530.0" prefHeight="40.0" prefWidth="143.0" text="Room number">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <Label layoutX="274.0" layoutY="470.0" prefHeight="40.0" prefWidth="100.0" text="Check-out">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <Label layoutX="15.0" layoutY="470.0" prefHeight="40.0" prefWidth="98.0" text="Check-in">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <DatePicker fx:id="doubleCheckIn" layoutX="100.0" layoutY="470.0" prefHeight="40.0"
+                                 prefWidth="150.0"/>
+                     <DatePicker fx:id="doubleCheckOut" layoutX="375.0" layoutY="470.0" prefHeight="40.0"
+                                 prefWidth="150.0"/>
+                     <Button fx:id="doubleRoomButton" layoutX="950.0" layoutY="750.0" mnemonicParsing="false"
+                             prefHeight="40.0" prefWidth="100.0" text="Add">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Button>
+                     <ComboBox fx:id="doubleRoomNr" layoutX="170.0" layoutY="530.0" prefHeight="40.0" prefWidth="80.0"/>
+                     <Label layoutX="10.0" layoutY="10.0" prefHeight="40.0" text="First customer" textFill="#8e8e8e"
+                            underline="true">
+                        <font>
+                           <Font name="System Italic" size="20.0"/>
+                        </font>
+                     </Label>
+                     <Label layoutX="564.0" layoutY="10.0" prefHeight="40.0" text="Second customer" textFill="#8e8e8e"
+                            underline="true">
+                        <font>
+                           <Font name="System Italic" size="20.0"/>
+                        </font>
+                     </Label>
+                     <Label layoutX="604.0" layoutY="50.0" prefHeight="40.0" prefWidth="121.0" text="First name">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <TextField fx:id="doubleFirstName2" layoutX="604.0" layoutY="90.0" prefHeight="40.0"
+                                prefWidth="200.0">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </TextField>
+                     <Label layoutX="880.0" layoutY="50.0" prefHeight="40.0" prefWidth="100.0" text="Last name">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <TextField fx:id="doubleLastName2" layoutX="880.0" layoutY="90.0" prefHeight="40.0"
+                                prefWidth="200.0">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </TextField>
+                     <Label layoutX="604.0" layoutY="153.0" prefHeight="40.0" prefWidth="53.0" text="DoB">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <DatePicker fx:id="doubleDoB2" layoutX="654.0" layoutY="153.0" prefHeight="40.0"
+                                 prefWidth="150.0"/>
+                     <Label layoutX="880.0" layoutY="153.0" prefHeight="40.0" prefWidth="80.0" text="Gender">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <ComboBox fx:id="doubleGender2" layoutX="1000.0" layoutY="153.0" prefHeight="40.0"
+                               prefWidth="80.0"/>
+                     <CheckBox fx:id="doubleKidTickBox" layoutX="10.0" layoutY="213.0" mnemonicParsing="false"
+                               prefHeight="40.0" text="Kid &lt; 15 years old" textFill="#8e8e8e">
+                        <font>
+                           <Font name="System Italic" size="20.0"/>
+                        </font>
+                     </CheckBox>
+                     <Label layoutX="50.0" layoutY="253.0" prefHeight="40.0" prefWidth="121.0" text="First name">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <TextField fx:id="doubleKidFirstName" layoutX="50.0" layoutY="293.0" prefHeight="40.0"
+                                prefWidth="200.0">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </TextField>
+                     <Label layoutX="325.0" layoutY="253.0" prefHeight="40.0" prefWidth="100.0" text="Last name">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <TextField fx:id="doubleKidLastName" layoutX="325.0" layoutY="293.0" prefHeight="40.0"
+                                prefWidth="200.0">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </TextField>
+                     <Label layoutX="50.0" layoutY="356.0" prefHeight="40.0" prefWidth="78.0" text="DoB">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <DatePicker fx:id="doubleKidDoB" layoutX="100.0" layoutY="356.0" prefHeight="40.0"
+                                 prefWidth="150.0"/>
+                     <Label layoutX="328.0" layoutY="356.0" prefHeight="40.0" prefWidth="74.0" text="Gender">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <ComboBox fx:id="doubleKidGender" layoutX="445.0" layoutY="356.0" prefHeight="40.0"
+                               prefWidth="80.0"/>
+                     <Line endX="1005.39990234375" endY="6.103515625E-5" layoutX="101.0" layoutY="448.0" startX="-100.0"
+                           stroke="#8e8e8e" strokeWidth="2.0"/>
                   </AnchorPane>
-               </content>
-            </Tab>
-            <Tab fx:id="newCustomerTab" text="new customer">
-               <content>
+               </Tab>
+               <Tab fx:id="deluxeRoomTab" text="Deluxe room">
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <Label layoutX="14.0" layoutY="29.0" prefHeight="40.0" prefWidth="121.0" text="First name">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="customerFirstName" layoutX="218.0" layoutY="26.0" prefHeight="40.0" prefWidth="460.0">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </TextField>
-                        <Label layoutX="14.0" layoutY="103.0" prefHeight="40.0" prefWidth="100.0" text="Last name">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="customerLastName" layoutX="218.0" layoutY="101.0" prefHeight="40.0" prefWidth="460.0">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </TextField>
-                        <Label layoutX="14.0" layoutY="176.0" prefHeight="40.0" prefWidth="168.0" text="DoB">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <DatePicker fx:id="customerDoB" layoutX="218.0" layoutY="176.0" prefHeight="40.0" prefWidth="198.0" />
-                        <Label layoutX="14.0" layoutY="251.0" prefHeight="40.0" prefWidth="100.0" text="Gender">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <ComboBox fx:id="customerGender" layoutX="218.0" layoutY="251.0" prefHeight="40.0" prefWidth="150.0" />
-                        <Label layoutX="14.0" layoutY="326.0" prefHeight="40.0" prefWidth="143.0" text="Room number">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="customerRoom" layoutX="218.0" layoutY="324.0" prefHeight="43.0" prefWidth="150.0">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </TextField>
-                        <Label layoutX="14.0" layoutY="476.0" prefHeight="40.0" prefWidth="143.0" text="Check-out">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="14.0" layoutY="401.0" prefHeight="40.0" prefWidth="143.0" text="Check-in">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                        <DatePicker fx:id="customerCheckin" layoutX="218.0" layoutY="401.0" prefHeight="40.0" prefWidth="198.0" />
-                        <DatePicker fx:id="customerCheckout" layoutX="218.0" layoutY="476.0" prefHeight="40.0" prefWidth="198.0" />
-                        <Button fx:id="newCustomerButton" layoutX="578.0" layoutY="474.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Add">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Button>
-                     </children>
+                     <Label layoutX="50.0" layoutY="50.0" prefHeight="40.0" prefWidth="121.0" text="First name">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <TextField fx:id="deluxeFirstName1" layoutX="50.0" layoutY="90.0" prefHeight="40.0" prefWidth="200.0">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </TextField>
+                     <Label layoutX="300.0" layoutY="50.0" prefHeight="40.0" prefWidth="100.0" text="Last name">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <TextField fx:id="deluxeLastName1" layoutX="300.0" layoutY="90.0" prefHeight="40.0" prefWidth="200.0">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </TextField>
+                     <Label layoutX="50.0" layoutY="153.0" prefHeight="40.0" prefWidth="59.0" text="DoB">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <DatePicker fx:id="deluxeDoB1" layoutX="100.0" layoutY="153.0" prefHeight="40.0" prefWidth="150.0" />
+                     <Label layoutX="300.0" layoutY="153.0" prefHeight="40.0" prefWidth="81.0" text="Gender">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <ComboBox fx:id="deluxeGender1" layoutX="420.0" layoutY="153.0" prefHeight="40.0" prefWidth="80.0" />
+                     <Label layoutX="17.0" layoutY="715.0" prefHeight="40.0" prefWidth="143.0" text="Room number">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <Label layoutX="350.0" layoutY="655.0" prefHeight="40.0" prefWidth="100.0" text="Check-out">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <Label layoutX="15.0" layoutY="655.0" prefHeight="40.0" prefWidth="98.0" text="Check-in">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <DatePicker fx:id="deluxeCheckIn" layoutX="150.0" layoutY="655.0" prefHeight="40.0" prefWidth="150.0" />
+                     <DatePicker fx:id="deluxeCheckOut" layoutX="499.0" layoutY="655.0" prefHeight="40.0" prefWidth="150.0" />
+                     <Button fx:id="deluxeRoomButton" layoutX="950.0" layoutY="750.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Add">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Button>
+                     <ComboBox fx:id="deluxeRoomNr" layoutX="170.0" layoutY="715.0" prefHeight="40.0" prefWidth="80.0" />
+                     <Label layoutX="10.0" layoutY="10.0" prefHeight="40.0" text="First customer" textFill="#8e8e8e" underline="true">
+                        <font>
+                           <Font name="System Italic" size="20.0" />
+                        </font>
+                     </Label>
+                     <Label layoutX="590.0" layoutY="10.0" prefHeight="40.0" text="Second customer" textFill="#8e8e8e" underline="true">
+                        <font>
+                           <Font name="System Italic" size="20.0" />
+                        </font>
+                     </Label>
+                     <Label layoutX="630.0" layoutY="50.0" prefHeight="40.0" prefWidth="121.0" text="First name">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <TextField fx:id="deluxeFirstName2" layoutX="630.0" layoutY="90.0" prefHeight="40.0" prefWidth="200.0">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </TextField>
+                     <Label layoutX="880.0" layoutY="50.0" prefHeight="40.0" prefWidth="100.0" text="Last name">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <TextField fx:id="deluxeLastName2" layoutX="880.0" layoutY="90.0" prefHeight="40.0" prefWidth="200.0">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </TextField>
+                     <Label layoutX="630.0" layoutY="153.0" prefHeight="40.0" prefWidth="53.0" text="DoB">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <DatePicker fx:id="deluxeDoB2" layoutX="680.0" layoutY="153.0" prefHeight="40.0" prefWidth="150.0" />
+                     <Label layoutX="880.0" layoutY="153.0" prefHeight="40.0" prefWidth="80.0" text="Gender">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <ComboBox fx:id="deluxeGender2" layoutX="1000.0" layoutY="153.0" prefHeight="40.0" prefWidth="80.0" />
+                     <CheckBox fx:id="deluxeKidTickBox" layoutX="10.0" layoutY="416.0" mnemonicParsing="false" prefHeight="40.0" text="Kid &lt; 15 years old" textFill="#8e8e8e">
+                        <font>
+                           <Font name="System Italic" size="20.0" />
+                        </font>
+                     </CheckBox>
+                     <Label layoutX="50.0" layoutY="456.0" prefHeight="40.0" prefWidth="121.0" text="First name">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <TextField fx:id="deluxeKidFirstName" layoutX="50.0" layoutY="496.0" prefHeight="40.0" prefWidth="200.0">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </TextField>
+                     <Label layoutX="300.0" layoutY="456.0" prefHeight="40.0" prefWidth="100.0" text="Last name">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <TextField fx:id="deluxeKidLastName" layoutX="300.0" layoutY="496.0" prefHeight="40.0" prefWidth="200.0">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </TextField>
+                     <Label layoutX="50.0" layoutY="559.0" prefHeight="40.0" prefWidth="78.0" text="DoB">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <DatePicker fx:id="deluxeKidDoB" layoutX="100.0" layoutY="559.0" prefHeight="40.0" prefWidth="150.0" />
+                     <Label layoutX="300.0" layoutY="559.0" prefHeight="40.0" prefWidth="74.0" text="Gender">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <ComboBox fx:id="deluxeKidGender" layoutX="420.0" layoutY="559.0" prefHeight="40.0" prefWidth="80.0" />
+                     <Line endX="1005.39990234375" endY="6.103515625E-5" layoutX="101.0" layoutY="633.0" startX="-100.0" stroke="#8e8e8e" strokeWidth="2.0" />
+                     <Label layoutX="50.0" layoutY="250.0" prefHeight="40.0" prefWidth="121.0" text="First name">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <TextField fx:id="deluxeFirstName3" layoutX="50.0" layoutY="290.0" prefHeight="40.0" prefWidth="200.0">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </TextField>
+                     <Label layoutX="300.0" layoutY="250.0" prefHeight="40.0" prefWidth="100.0" text="Last name">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <TextField fx:id="deluxeLastName3" layoutX="300.0" layoutY="290.0" prefHeight="40.0" prefWidth="200.0">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </TextField>
+                     <Label layoutX="50.0" layoutY="351.0" prefHeight="40.0" prefWidth="59.0" text="DoB">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <DatePicker fx:id="deluxeDoB3" layoutX="100.0" layoutY="351.0" prefHeight="40.0" prefWidth="150.0" />
+                     <Label layoutX="300.0" layoutY="351.0" prefHeight="40.0" prefWidth="81.0" text="Gender">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <ComboBox fx:id="deluxeGender3" layoutX="420.0" layoutY="351.0" prefHeight="40.0" prefWidth="80.0" />
+                     <Label layoutX="10.0" layoutY="210.0" prefHeight="40.0" text="Third customer" textFill="#8e8e8e" underline="true">
+                        <font>
+                           <Font name="System Italic" size="20.0" />
+                        </font>
+                     </Label>
+                     <Label layoutX="630.0" layoutY="250.0" prefHeight="40.0" prefWidth="121.0" text="First name">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <TextField fx:id="deluxeFirstName4" layoutX="630.0" layoutY="290.0" prefHeight="40.0" prefWidth="200.0">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </TextField>
+                     <Label layoutX="880.0" layoutY="249.0" prefHeight="40.0" prefWidth="100.0" text="Last name">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <TextField fx:id="deluxeLastName4" layoutX="880.0" layoutY="290.0" prefHeight="40.0" prefWidth="200.0">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </TextField>
+                     <Label layoutX="633.0" layoutY="351.0" prefHeight="40.0" prefWidth="59.0" text="DoB">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <DatePicker fx:id="deluxeDoB4" layoutX="680.0" layoutY="351.0" prefHeight="40.0" prefWidth="150.0" />
+                     <Label layoutX="879.0" layoutY="351.0" prefHeight="40.0" prefWidth="81.0" text="Gender">
+                        <font>
+                           <Font size="20.0" />
+                        </font>
+                     </Label>
+                     <ComboBox fx:id="deluxeGender4" layoutX="1000.0" layoutY="351.0" prefHeight="40.0" prefWidth="80.0" />
+                     <Label layoutX="590.0" layoutY="210.0" prefHeight="40.0" text="Fourth customer" textFill="#8e8e8e" underline="true">
+                        <font>
+                           <Font name="System Italic" size="20.0" />
+                        </font>
+                     </Label>
                   </AnchorPane>
-               </content>
-            </Tab>
-        </tabs>
-      </TabPane>
-      <Button fx:id="reload" layoutX="1368.0" layoutY="125.0" mnemonicParsing="false" text="Reload" />
-   </children>
+               </Tab>
+               <Tab fx:id="luxuryRoomTab" text="Luxury room">
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <Label layoutX="50.0" layoutY="50.0" prefHeight="40.0" prefWidth="121.0" text="First name">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <TextField fx:id="luxuryFirstName1" layoutX="50.0" layoutY="90.0" prefHeight="40.0"
+                                prefWidth="200.0">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </TextField>
+                     <Label layoutX="300.0" layoutY="50.0" prefHeight="40.0" prefWidth="100.0" text="Last name">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <TextField fx:id="luxuryLastName1" layoutX="300.0" layoutY="90.0" prefHeight="40.0"
+                                prefWidth="200.0">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </TextField>
+                     <Label layoutX="50.0" layoutY="153.0" prefHeight="40.0" prefWidth="59.0" text="DoB">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <DatePicker fx:id="luxuryDoB1" layoutX="100.0" layoutY="153.0" prefHeight="40.0"
+                                 prefWidth="150.0"/>
+                     <Label layoutX="300.0" layoutY="153.0" prefHeight="40.0" prefWidth="81.0" text="Gender">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <ComboBox fx:id="luxuryGender1" layoutX="420.0" layoutY="153.0" prefHeight="40.0"
+                               prefWidth="80.0"/>
+                     <Label layoutX="17.0" layoutY="715.0" prefHeight="40.0" prefWidth="143.0" text="Room number">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <Label layoutX="350.0" layoutY="655.0" prefHeight="40.0" prefWidth="100.0" text="Check-out">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <Label layoutX="15.0" layoutY="655.0" prefHeight="40.0" prefWidth="98.0" text="Check-in">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <DatePicker fx:id="luxuryCheckIn" layoutX="150.0" layoutY="655.0" prefHeight="40.0"
+                                 prefWidth="150.0"/>
+                     <DatePicker fx:id="luxuryCheckOut" layoutX="500.0" layoutY="655.0" prefHeight="40.0"
+                                 prefWidth="150.0"/>
+                     <Button fx:id="luxuryRoomButton" layoutX="950.0" layoutY="750.0" mnemonicParsing="false"
+                             prefHeight="40.0" prefWidth="100.0" text="Add">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Button>
+                     <ComboBox fx:id="luxuryRoomNr" layoutX="170.0" layoutY="715.0" prefHeight="40.0" prefWidth="80.0"/>
+                     <Label layoutX="10.0" layoutY="10.0" prefHeight="40.0" text="First customer" textFill="#8e8e8e"
+                            underline="true">
+                        <font>
+                           <Font name="System Italic" size="20.0"/>
+                        </font>
+                     </Label>
+                     <Label layoutX="590.0" layoutY="10.0" prefHeight="40.0" text="Second customer" textFill="#8e8e8e"
+                            underline="true">
+                        <font>
+                           <Font name="System Italic" size="20.0"/>
+                        </font>
+                     </Label>
+                     <Label layoutX="630.0" layoutY="50.0" prefHeight="40.0" prefWidth="121.0" text="First name">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <TextField fx:id="luxuryFirstName2" layoutX="630.0" layoutY="90.0" prefHeight="40.0"
+                                prefWidth="200.0">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </TextField>
+                     <Label layoutX="880.0" layoutY="50.0" prefHeight="40.0" prefWidth="100.0" text="Last name">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <TextField fx:id="luxuryLastName2" layoutX="880.0" layoutY="90.0" prefHeight="40.0"
+                                prefWidth="200.0">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </TextField>
+                     <Label layoutX="630.0" layoutY="153.0" prefHeight="40.0" prefWidth="53.0" text="DoB">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <DatePicker fx:id="luxuryDoB2" layoutX="680.0" layoutY="153.0" prefHeight="40.0"
+                                 prefWidth="150.0"/>
+                     <Label layoutX="880.0" layoutY="153.0" prefHeight="40.0" prefWidth="80.0" text="Gender">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <ComboBox fx:id="luxuryGender2" layoutX="1000.0" layoutY="153.0" prefHeight="40.0"
+                               prefWidth="80.0"/>
+                     <CheckBox fx:id="luxuryKidTickBox" layoutX="10.0" layoutY="416.0" mnemonicParsing="false"
+                               prefHeight="40.0" text="Kid &lt; 15 years old" textFill="#8e8e8e">
+                        <font>
+                           <Font name="System Italic" size="20.0"/>
+                        </font>
+                     </CheckBox>
+                     <Label layoutX="50.0" layoutY="456.0" prefHeight="40.0" prefWidth="121.0" text="First name">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <TextField fx:id="luxuryKidFirstName" layoutX="50.0" layoutY="496.0" prefHeight="40.0"
+                                prefWidth="200.0">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </TextField>
+                     <Label layoutX="300.0" layoutY="456.0" prefHeight="40.0" prefWidth="100.0" text="Last name">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <TextField fx:id="luxuryKidLastName" layoutX="300.0" layoutY="496.0" prefHeight="40.0"
+                                prefWidth="200.0">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </TextField>
+                     <Label layoutX="50.0" layoutY="559.0" prefHeight="40.0" prefWidth="78.0" text="DoB">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <DatePicker fx:id="luxuryKidDoB" layoutX="100.0" layoutY="559.0" prefHeight="40.0"
+                                 prefWidth="150.0"/>
+                     <Label layoutX="300.0" layoutY="559.0" prefHeight="40.0" prefWidth="74.0" text="Gender">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <ComboBox fx:id="luxuryKidGender" layoutX="420.0" layoutY="559.0" prefHeight="40.0"
+                               prefWidth="80.0"/>
+                     <Line endX="1005.39990234375" endY="6.103515625E-5" layoutX="101.0" layoutY="633.0" startX="-100.0"
+                           stroke="#8e8e8e" strokeWidth="2.0"/>
+                     <Label layoutX="50.0" layoutY="250.0" prefHeight="40.0" prefWidth="121.0" text="First name">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <TextField fx:id="luxuryFirstName3" layoutX="50.0" layoutY="290.0" prefHeight="40.0"
+                                prefWidth="200.0">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </TextField>
+                     <Label layoutX="300.0" layoutY="250.0" prefHeight="40.0" prefWidth="100.0" text="Last name">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <TextField fx:id="luxuryLastName3" layoutX="300.0" layoutY="290.0" prefHeight="40.0"
+                                prefWidth="200.0">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </TextField>
+                     <Label layoutX="50.0" layoutY="351.0" prefHeight="40.0" prefWidth="59.0" text="DoB">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <DatePicker fx:id="luxuryDoB3" layoutX="100.0" layoutY="351.0" prefHeight="40.0"
+                                 prefWidth="150.0"/>
+                     <Label layoutX="300.0" layoutY="351.0" prefHeight="40.0" prefWidth="81.0" text="Gender">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <ComboBox fx:id="luxuryGender3" layoutX="420.0" layoutY="351.0" prefHeight="40.0"
+                               prefWidth="80.0"/>
+                     <Label layoutX="10.0" layoutY="210.0" prefHeight="40.0" text="Third customer" textFill="#8e8e8e"
+                            underline="true">
+                        <font>
+                           <Font name="System Italic" size="20.0"/>
+                        </font>
+                     </Label>
+                     <Label layoutX="630.0" layoutY="250.0" prefHeight="40.0" prefWidth="121.0" text="First name">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <TextField fx:id="luxuryFirstName4" layoutX="630.0" layoutY="290.0" prefHeight="40.0"
+                                prefWidth="200.0">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </TextField>
+                     <Label layoutX="880.0" layoutY="249.0" prefHeight="40.0" prefWidth="100.0" text="Last name">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <TextField fx:id="luxuryLastName4" layoutX="880.0" layoutY="290.0" prefHeight="40.0"
+                                prefWidth="200.0">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </TextField>
+                     <Label layoutX="633.0" layoutY="351.0" prefHeight="40.0" prefWidth="59.0" text="DoB">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <DatePicker fx:id="luxuryDoB4" layoutX="680.0" layoutY="351.0" prefHeight="40.0"
+                                 prefWidth="150.0"/>
+                     <Label layoutX="879.0" layoutY="351.0" prefHeight="40.0" prefWidth="81.0" text="Gender">
+                        <font>
+                           <Font size="20.0"/>
+                        </font>
+                     </Label>
+                     <ComboBox fx:id="luxuryGender4" layoutX="1000.0" layoutY="351.0" prefHeight="40.0"
+                               prefWidth="80.0"/>
+                     <Label layoutX="590.0" layoutY="210.0" prefHeight="40.0" text="Fourth customer" textFill="#8e8e8e"
+                            underline="true">
+                        <font>
+                           <Font name="System Italic" size="20.0"/>
+                        </font>
+                     </Label>
+                  </AnchorPane>
+               </Tab>
+            </TabPane>
+         </AnchorPane>
+      </Tab>
+   </TabPane>
+   <Button fx:id="reload" layoutX="187.0" layoutY="95.0" mnemonicParsing="false" text="Reload" />
+   <MenuButton layoutX="313.0" layoutY="95.0" mnemonicParsing="false" text="MenuButton">
+      <items>
+         <MenuItem mnemonicParsing="false" text="Action 1" />
+         <MenuItem mnemonicParsing="false" text="Action 2" />
+      </items>
+   </MenuButton>
+   <Line endX="-100.0" endY="815.7999877929688" layoutX="805.0" layoutY="89.0" startX="-100.0" startY="-92.99998474121094" strokeWidth="5.0" />
 </AnchorPane>

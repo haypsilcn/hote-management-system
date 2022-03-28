@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,6 +19,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -45,6 +47,7 @@ public class MainController implements Initializable, Database {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
 
         try {
             adminDB = new AdminDB();
@@ -82,7 +85,7 @@ public class MainController implements Initializable, Database {
             }
             else {
                 if (usernameTextField.getText().isEmpty() && passwordFeld.getText().isEmpty())
-                    alert.setContentText("Username and Password cannot be empty!");
+                    alert.setContentText("Please log in to continue!");
                 else if (passwordFeld.getText().isEmpty())
                     alert.setContentText("Please insert your password!");
                 else if (usernameTextField.getText().isEmpty())

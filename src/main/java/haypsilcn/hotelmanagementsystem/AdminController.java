@@ -5,11 +5,13 @@ import haypsilcn.hotelmanagementsystem.customer.Customer;
 import haypsilcn.hotelmanagementsystem.database.*;
 import haypsilcn.hotelmanagementsystem.exceptions.AdminAlreadyExists;
 import haypsilcn.hotelmanagementsystem.exceptions.EmployeeAlreadyExist;
+import haypsilcn.hotelmanagementsystem.exceptions.RoomAlreadyExist;
 import haypsilcn.hotelmanagementsystem.hotel.Employee;
 import haypsilcn.hotelmanagementsystem.hotel.Room;
 import haypsilcn.hotelmanagementsystem.login.Admin;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -30,36 +32,224 @@ import java.util.Objects;
 
 public class AdminController {
 
-    public TabPane tabPane;
-    public TextField search;
-    public Button searchButton;
-    public TabPane addTabPane;
-    public Tab newAdminTab;
-    public TextField newUsernameTextField;
-    public PasswordField passwordField;
-    public PasswordField confirmPass;
-    public Button newAdminButton;
-    public Tab newRoomTab;
-    public TextField roomTextField;
-    public ComboBox roomType;
+    @FXML
     public Button newRoomButton;
-    public Tab newCustomerTab;
-    public TextField customerFirstName;
-    public TextField customerLastName;
-    public DatePicker customerDoB;
-    public ComboBox customerGender;
-    public TextField customerRoom;
-    public DatePicker customerCheckin;
-    public DatePicker customerCheckout;
-    public Button newCustomerButton;
-    public Tab newEmployeeTab;
-    public TextField employeeFirstName;
-    public TextField employeeLastName;
-    public DatePicker employeeDoB;
-    public ComboBox<String> employeeGender;
-    public ComboBox<String> employeeDepartment;
+    @FXML
+    public Button searchButton;
+    @FXML
+    public Button newAdminButton;
+    @FXML
     public Button newEmployeeButton;
+    @FXML
     public Button reload;
+    @FXML
+    public Button doubleRoomButton;
+    @FXML
+    public Button deluxeRoomButton;
+    @FXML
+    public Button luxuryRoomButton;
+    @FXML
+    public Button singleRoomButton;
+
+    @FXML
+    public PasswordField passwordField;
+    @FXML
+    public PasswordField confirmPass;
+
+    @FXML
+    public ComboBox<Integer> singleRoomNr;
+    @FXML
+    public ComboBox<Integer> doubleRoomNr;
+    @FXML
+    public ComboBox<Integer> deluxeRoomNr;
+    @FXML
+    public ComboBox<Integer> luxuryRoomNr;
+    @FXML
+    public ComboBox<String> roomType;
+    @FXML
+    public ComboBox<String> employeeGender;
+    @FXML
+    public ComboBox<String> employeeDepartment;
+    @FXML
+    public ComboBox<String> singleGender;
+    @FXML
+    public ComboBox<String> doubleGender1;
+    @FXML
+    public ComboBox<String> doubleKidGender;
+    @FXML
+    public ComboBox<String> doubleGender2;
+    @FXML
+    public ComboBox<String> deluxeGender1;
+    @FXML
+    public ComboBox<String> deluxeGender2;
+    @FXML
+    public ComboBox<String> deluxeKidGender;
+    @FXML
+    public ComboBox<String> deluxeGender3;
+    @FXML
+    public ComboBox<String> deluxeGender4;
+    @FXML
+    public ComboBox<String> luxuryGender1;
+    @FXML
+    public ComboBox<String> luxuryGender2;
+    @FXML
+    public ComboBox<String> luxuryKidGender;
+    @FXML
+    public ComboBox<String> luxuryGender3;
+    @FXML
+    public ComboBox<String> luxuryGender4;
+
+
+    @FXML
+    public DatePicker employeeDoB;
+    @FXML
+    public DatePicker singleDoB;
+    @FXML
+    public DatePicker singleCheckIn;
+    @FXML
+    public DatePicker singleCheckOut;
+    @FXML
+    public DatePicker doubleDoB1;
+    @FXML
+    public DatePicker doubleCheckIn;
+    @FXML
+    public DatePicker doubleCheckOut;
+    @FXML
+    public DatePicker doubleDoB2;
+    @FXML
+    public DatePicker doubleKidDoB;
+    @FXML
+    public DatePicker deluxeDoB1;
+    @FXML
+    public DatePicker deluxeCheckIn;
+    @FXML
+    public DatePicker deluxeCheckOut;
+    @FXML
+    public DatePicker deluxeDoB2;
+    @FXML
+    public DatePicker deluxeKidDoB;
+    @FXML
+    public DatePicker deluxeDoB3;
+    @FXML
+    public DatePicker deluxeDoB4;
+    @FXML
+    public DatePicker luxuryDoB1;
+    @FXML
+    public DatePicker luxuryCheckIn;
+    @FXML
+    public DatePicker luxuryCheckOut;
+    @FXML
+    public DatePicker luxuryDoB2;
+
+    @FXML
+    public DatePicker luxuryKidDoB;
+    @FXML
+    public DatePicker luxuryDoB3;
+    @FXML
+    public DatePicker luxuryDoB4;
+
+    @FXML
+    public CheckBox deluxeKidTickBox;
+    @FXML
+    public CheckBox doubleKidTickBox;
+    @FXML
+    public CheckBox luxuryKidTickBox;
+
+    @FXML
+    public Text welcomeText;
+    @FXML
+    public Parent root;
+    @FXML
+    public MenuBar menuBar;
+
+    @FXML
+    public TabPane tabPane;
+    @FXML
+    public TabPane addTabPane;
+
+    @FXML
+    public Tab newAdminTab;
+    @FXML
+    public Tab newRoomTab;
+    @FXML
+    public Tab checkInTab;
+    @FXML
+    public Tab newEmployeeTab;
+    @FXML
+    public Tab singleRoomTab;
+    @FXML
+    public Tab doubleRoomTab;
+    @FXML
+    public Tab deluxeRoomTab;
+    @FXML
+    public Tab luxuryRoomTab;
+
+    @FXML
+    public TextField search;
+    @FXML
+    public TextField newUsernameTextField;
+    @FXML
+    public TextField roomNrTextField;
+    @FXML
+    public TextField employeeFirstName;
+    @FXML
+    public TextField employeeLastName;
+    @FXML
+    public TextField singleLastName;
+    @FXML
+    public TextField doubleFirstName1;
+    @FXML
+    public TextField doubleLastName1;
+    @FXML
+    public TextField doubleKidFirstName;
+    @FXML
+    public TextField doubleKidLastName;
+    @FXML
+    public TextField doubleFirstName2;
+    @FXML
+    public TextField doubleLastName2;
+    @FXML
+    public TextField deluxeFirstName1;
+    @FXML
+    public TextField deluxeLastName1;
+    @FXML
+    public TextField deluxeFirstName2;
+    @FXML
+    public TextField deluxeLastName2;
+    @FXML
+    public TextField deluxeKidFirstName;
+    @FXML
+    public TextField deluxeKidLastName;
+    @FXML
+    public TextField deluxeFirstName3;
+    @FXML
+    public TextField deluxeLastName3;
+    @FXML
+    public TextField deluxeFirstName4;
+    @FXML
+    public TextField deluxeLastName4;
+    @FXML
+    public TextField luxuryFirstName1;
+    @FXML
+    public TextField luxuryLastName1;
+    @FXML
+    public TextField luxuryFirstName2;
+    @FXML
+    public TextField luxuryLastName2;
+    @FXML
+    public TextField luxuryKidFirstName;
+    @FXML
+    public TextField luxuryKidLastName;
+    @FXML
+    public TextField luxuryFirstName3;
+    @FXML
+    public TextField luxuryLastName3;
+    @FXML
+    public TextField luxuryFirstName4;
+    @FXML
+    public TextField luxuryLastName4;
+    @FXML
+    public TextField singleFirstName;
 
     private Stage stage;
     private Scene scene;
@@ -68,24 +258,24 @@ public class AdminController {
     private CustomerDB customerDB;
     private RoomDB roomDB;
     private EmployeeDB employeeDB;
+
     private ResultSet resultSet;
 
     private Alert alert;
+
     private TableView<Admin> adminTable;
     private TableView<Room> roomTable;
-    private TableView<Customer> customerRoomTable;
+    private TableView<Customer> customerTable;
     private TableView<Employee> employeeTable;
     private TableView<BookingCustomer> bookingCustomerTable;
+
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
 
     private final ObservableList<Admin> adminObservableList = FXCollections.observableArrayList();
     private final ObservableList<Room> roomObservableList = FXCollections.observableArrayList();
     private final ObservableList<Customer> customerObservableList = FXCollections.observableArrayList();
     private final ObservableList<Employee> employeeObservableList = FXCollections.observableArrayList();
-    private final ObservableList<BookingCustomer> bookingCustomerObservableList = FXCollections.observableArrayList();
 
-    public Text welcomeText;
-    public Parent root;
-    public MenuBar menuBar;
 
     public void setupAdmin(Admin admin) throws SQLException {
         try {
@@ -163,7 +353,7 @@ public class AdminController {
 
 
         Tab adminTab = new Tab("admin", getAdminTable(admin));
-        Tab customerTab = new Tab("customer", getCustomerRoomTable());
+        Tab customerTab = new Tab("customer", getCustomerTable());
         Tab emptyRoomTab = new Tab("room", getRoomTable());
         Tab employeeTab = new Tab("employee", getEmployeeTable());
         Tab bookingTab = new Tab("booking", getBookingCustomerTable());
@@ -179,11 +369,12 @@ public class AdminController {
 
         newAdminTab.setStyle("-fx-font-size: 15px");
         newEmployeeTab.setStyle("-fx-font-size: 15px");
-        newCustomerTab.setStyle("-fx-font-size: 15px");
+        checkInTab.setStyle("-fx-font-size: 15px");
         newRoomTab.setStyle("-fx-font-size: 15px");
 
         setNewEmployeeTab();
-
+        setNewRoomTab();
+        setCheckInTab();
 
         newAdminButton.setOnAction(event -> {
             try {
@@ -214,6 +405,19 @@ public class AdminController {
                 alert.setContentText("DoB format is: d/M/yyyy. Please check again!");
                 alert.showAndWait();
             }
+        });
+
+        newRoomButton.setOnAction(event -> {
+            try {
+                createRoom();
+            } catch (RoomAlreadyExist e) {
+                System.out.println(e);
+                alert.setContentText("Room <<" + roomNrTextField.getText() + ">> is already exists!");
+                alert.showAndWait();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            roomNrTextField.clear();
         });
 
     }
@@ -253,15 +457,16 @@ public class AdminController {
         roomTable = new TableView<>();
         roomTable.setFixedCellSize(30);
         roomTable.setEditable(false);
+
         TableColumn<Room, String> roomNr = new TableColumn<>("roomNr");
         TableColumn<Room, String> type = new TableColumn<>("type");
+
         roomNr.setCellValueFactory(new PropertyValueFactory<>("number"));
         type.setCellValueFactory(new PropertyValueFactory<>("type"));
 
         roomTable.getColumns().addAll(roomNr, type);
-        resultSet = roomDB.emptyRoom();
-        while (resultSet.next())
-            roomTable.getItems().add(new Room(resultSet.getInt(1), resultSet.getString(2)));
+        reloadRoomTable();
+
         return roomTable;
     }
 
@@ -270,10 +475,10 @@ public class AdminController {
      * @return
      * @throws SQLException
      */
-    private TableView<Customer> getCustomerRoomTable() throws SQLException {
+    private TableView<Customer> getCustomerTable() throws SQLException {
 
-        customerRoomTable = new TableView<>();
-        customerRoomTable.setFixedCellSize(30);
+        customerTable = new TableView<>();
+        customerTable.setFixedCellSize(30);
 
         TableColumn<Customer, Integer> id = new TableColumn<>("id");
         TableColumn<Customer, String> firstName = new TableColumn<>("firstname");
@@ -293,21 +498,10 @@ public class AdminController {
         checkin.setCellValueFactory(new PropertyValueFactory<>("checkin"));
         checkout.setCellValueFactory(new PropertyValueFactory<>("checkout"));
 
-        customerRoomTable.getColumns().addAll(id, firstName, lastName, birthday, gender, room, checkin, checkout);
-        resultSet = customerDB.showAll();
-        while (resultSet.next())
-            customerRoomTable.getItems().add(new Customer(
-                    resultSet.getInt(1), // id
-                    resultSet.getString(2), // first name
-                    resultSet.getString(3), // last name
-                    resultSet.getString(4), // birthday
-                    resultSet.getString(5), // gender
-                    resultSet.getInt(6), //room
-                    resultSet.getString(7), // check in
-                    resultSet.getString(8) // check out
-            ));
-        return customerRoomTable;
+        customerTable.getColumns().addAll(id, firstName, lastName, birthday, gender, room, checkin, checkout);
+        reloadCustomerTable();
 
+        return customerTable;
     }
 
     /**
@@ -385,6 +579,121 @@ public class AdminController {
         return bookingCustomerTable;
     }
 
+    private void setNewEmployeeTab() {
+        setDatePicker(employeeDoB);
+        setComboBoxGender(employeeGender);
+
+        // set up combo box department
+        employeeDepartment.getItems().addAll("Manager", "Reception", "Driver", "Housekeeper");
+        employeeDepartment.setValue("Reception");
+        employeeDepartment.setStyle("-fx-font-size: 15px");
+    }
+
+    private void setNewRoomTab() {
+        // set default value for combo box type of room
+        roomType.getItems().addAll("Single", "Double", "Deluxe", "Luxury");
+        roomType.setValue("Double");
+        roomType.setStyle("-fx-font-size: 15px");
+
+        // room number only accepts positive integers 0-9 with length of 3 digits
+        roomNrTextField.textProperty().addListener(((observableValue, oldValue, newValue) -> {
+            if (!newValue.matches("\\d{0,3}"))
+                roomNrTextField.setText(oldValue);
+        }));
+    }
+
+    private void setCheckInTab() throws SQLException {
+        setSingleRoomTab();
+        setDoubleRoomTab();
+        setDeluxeRoomTab();
+        setLuxuryRoomTab();
+
+    }
+
+    private void setSingleRoomTab() throws SQLException {
+        singleRoomTab.setStyle("-fx-font-size: 15px");
+
+        setDatePicker(singleDoB);
+        setDatePicker(singleCheckIn);
+        setDatePicker(singleCheckOut);
+        setComboBoxGender(singleGender);
+
+        resultSet = roomDB.getEmptyRoom("Single");
+        while (resultSet.next())
+            singleRoomNr.getItems().add(resultSet.getInt(1));
+        // set the default value = smallest empty room number
+        singleRoomNr.setValue(singleRoomNr.getItems().get(0));
+        singleRoomNr.setStyle("-fx-font-size: 15px");
+    }
+    
+    private void setDoubleRoomTab() throws SQLException {
+        doubleRoomTab.setStyle("-fx-font-size: 15px");
+
+        setCheckBoxAction(doubleKidTickBox, doubleKidFirstName, doubleKidLastName, doubleKidDoB, doubleKidGender);
+        setDatePicker(doubleDoB1);
+        setDatePicker(doubleDoB2);
+        setDatePicker(doubleCheckIn);
+        setDatePicker(doubleCheckOut);
+
+        setComboBoxGender(doubleGender1);
+        setComboBoxGender(doubleGender2);
+
+        resultSet = roomDB.getEmptyRoom("Double");
+        while (resultSet.next())
+            doubleRoomNr.getItems().add(resultSet.getInt(1));
+        // set the default value = smallest empty room number
+        doubleRoomNr.setValue(doubleRoomNr.getItems().get(0));
+        doubleRoomNr.setStyle("-fx-font-size: 15px");
+    }
+
+    private void setDeluxeRoomTab() throws SQLException {
+        deluxeRoomTab.setStyle("-fx-font-size: 15px");
+
+        setCheckBoxAction(deluxeKidTickBox, deluxeKidFirstName, deluxeKidLastName, deluxeKidDoB, deluxeKidGender);
+        setDatePicker(deluxeDoB1);
+        setDatePicker(deluxeDoB2);
+        setDatePicker(deluxeDoB3);
+        setDatePicker(deluxeDoB4);
+        setDatePicker(deluxeCheckIn);
+        setDatePicker(deluxeCheckOut);
+
+        setComboBoxGender(deluxeGender1);
+        setComboBoxGender(deluxeGender2);
+        setComboBoxGender(deluxeGender3);
+        setComboBoxGender(deluxeGender4);
+
+        resultSet = roomDB.getEmptyRoom("Deluxe");
+        while (resultSet.next())
+            deluxeRoomNr.getItems().add(resultSet.getInt(1));
+        // set the default value = smallest empty room number
+        deluxeRoomNr.setValue(doubleRoomNr.getItems().get(0));
+        deluxeRoomNr.setStyle("-fx-font-size: 15px");
+    }
+
+    private void setLuxuryRoomTab() throws SQLException {
+        luxuryRoomTab.setStyle("-fx-font-size: 15px");
+
+        setCheckBoxAction(luxuryKidTickBox, luxuryKidFirstName, luxuryKidLastName, luxuryKidDoB, luxuryKidGender);
+        setDatePicker(luxuryDoB1);
+        setDatePicker(luxuryDoB2);
+        setDatePicker(luxuryDoB3);
+        setDatePicker(luxuryDoB4);
+        setDatePicker(luxuryCheckIn);
+        setDatePicker(luxuryCheckOut);
+
+        setComboBoxGender(luxuryGender1);
+        setComboBoxGender(luxuryGender2);
+        setComboBoxGender(luxuryGender3);
+        setComboBoxGender(luxuryGender4);
+
+        resultSet = roomDB.getEmptyRoom("Luxury");
+        while (resultSet.next())
+            luxuryRoomNr.getItems().add(resultSet.getInt(1));
+        // set the default value = smallest empty room number
+        luxuryRoomNr.setValue(luxuryRoomNr.getItems().get(0));
+        luxuryRoomNr.setStyle("-fx-font-size: 15px");
+    }
+
     private void createUser(Admin admin) throws SQLException, AdminAlreadyExists {
         if (!newUsernameTextField.getText().isEmpty() && !passwordField.getText().isEmpty() && !confirmPass.getText().isEmpty()) {
             if (!passwordField.getText().equals(confirmPass.getText())) {
@@ -411,24 +720,7 @@ public class AdminController {
         }
     }
 
-    private void setNewEmployeeTab() {
-        // set up date picker dob
-        employeeDoB.setValue(LocalDate.now());
-        employeeDoB.setStyle("-fx-font-size: 15px");
-
-        // set up combo box gender
-        employeeGender.getItems().addAll("M", "F");
-        employeeGender.setValue("M"); // default value for gender combo box
-        employeeGender.setStyle("-fx-font-size: 15px");
-
-        // set up combo box department
-        employeeDepartment.getItems().addAll("Manager", "Reception", "Driver", "Housekeeper");
-        employeeDepartment.setValue("Reception");
-        employeeDepartment.setStyle("-fx-font-size: 15px");
-    }
-
     private void createEmployee() throws SQLException, EmployeeAlreadyExist, DateTimeParseException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/M/yyyy");
         if (!employeeFirstName.getText().isEmpty() && !employeeLastName.getText().isEmpty()) {
             Employee newEmployee = new Employee(
                     employeeFirstName.getText(),
@@ -451,6 +743,31 @@ public class AdminController {
         } else if (employeeLastName.getText().isEmpty()) {
             alert.setContentText("Please insert employee last name!");
             alert.showAndWait();
+        }
+    }
+
+    private void createRoom() throws RoomAlreadyExist, SQLException {
+        if (!roomNrTextField.getText().isEmpty()) {
+            Room newRoom = new Room(Integer.parseInt(roomNrTextField.getText()), roomType.getValue());
+            if (newRoom.getNumber() < 100) {
+                alert.setContentText("Room can only start with 100!");
+                alert.showAndWait();
+            } else
+                if (roomDB.createRoom(newRoom))
+                    reloadRoomTable();
+                else {
+                    alert.setContentText("Room <<" + newRoom.getNumber() + ">> is already exist!");
+                    alert.showAndWait();
+                }
+        } else {
+            alert.setContentText("Please insert room number!");
+            alert.showAndWait();
+        }
+    }
+
+    private void singleRoomCheckin() {
+        if (!singleFirstName.getText().isEmpty() && !singleLastName.getText().isEmpty()) {
+
         }
     }
 
@@ -477,5 +794,83 @@ public class AdminController {
             ));
             employeeTable.setItems(employeeObservableList);
         }
+    }
+
+    private void reloadRoomTable() throws SQLException {
+        roomObservableList.clear();
+        resultSet = roomDB.emptyRoom();
+        while (resultSet.next()) {
+            roomObservableList.add(new Room(resultSet.getInt(1), resultSet.getString(2)));
+            roomTable.setItems(roomObservableList);
+        }
+    }
+
+    private void reloadCustomerTable() throws SQLException {
+        customerObservableList.clear();
+        resultSet = customerDB.showAll();
+        while (resultSet.next()) {
+            customerObservableList.add(new Customer(
+                    resultSet.getInt(1), // customer id
+                    resultSet.getString(2), // first name
+                    resultSet.getString(3), // last name
+                    resultSet.getString(4), // birthday
+                    resultSet.getString(5), // gender
+                    resultSet.getInt(6), // room number
+                    resultSet.getString(7), // check in
+                    resultSet.getString(8) // check out
+            ));
+            customerTable.setItems(customerObservableList);        
+        }
+    }
+
+    private void showAlert(String message) {
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private void setComboBoxGender(ComboBox<String> comboBoxGender) {
+        comboBoxGender.getItems().addAll("F", "M");
+        comboBoxGender.setValue("F");
+        comboBoxGender.setStyle("-fx-font-size: 15px");
+    }
+
+    private void setDatePicker(DatePicker datePicker) {
+        datePicker.setValue(LocalDate.now());
+        datePicker.setStyle("-fx-font-size: 15px");
+    }
+
+    private void setCheckBoxAction(CheckBox checkBox, TextField firstName, TextField lastName, DatePicker dob, ComboBox<String> gender) {
+
+        /*
+         * Property description:
+         * Determines whether the user toggling the CheckBox should cycle through all three states: checked, unchecked, and undefined.
+         * If true then all three states will be cycled through;
+         * if false then only checked and unchecked will be cycled.
+         */
+        checkBox.setAllowIndeterminate(false);
+        checkBox.setSelected(false); // checkbox default as unchecked
+
+        firstName.setDisable(true);
+        lastName.setDisable(true);
+        dob.setDisable(true);
+        gender.setDisable(true);
+
+        // trigger the action when toggling the checkbox
+        checkBox.selectedProperty().addListener((observableValue, unchecked, checked) -> {
+            if (unchecked) {
+                firstName.setDisable(true);
+                lastName.setDisable(true);
+                dob.setDisable(true);
+                gender.setDisable(true);
+            } else {
+                firstName.setDisable(false);
+                lastName.setDisable(false);
+                dob.setDisable(false);
+                gender.setDisable(false);
+                setDatePicker(dob);
+                setComboBoxGender(gender);
+            }
+        });
+
     }
 }

@@ -1,5 +1,7 @@
 package haypsilcn.hotelmanagementsystem.database;
 
+import haypsilcn.hotelmanagementsystem.customer.Customer;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -24,5 +26,9 @@ public class CustomerDB implements Database{
     public ResultSet showBooking() throws SQLException {
         query = "SELECT * FROM booking_customer ORDER BY checkin";
         return connection.createStatement().executeQuery(query);
+    }
+
+    public boolean singleRoomCheckIn(Customer customer) {
+        return validate;
     }
 }
