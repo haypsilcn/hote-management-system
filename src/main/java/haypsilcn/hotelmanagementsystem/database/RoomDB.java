@@ -17,12 +17,7 @@ public class RoomDB implements Database{
     }
 
     public ResultSet emptyRoom() throws SQLException {
-        query = "SELECT r.*, cr.roomNr FROM room r LEFT JOIN customer_room cr on r.roomNr = cr.roomNr WHERE cr.roomNr IS NULL";
-        return (resultSet = connection.createStatement().executeQuery(query));
-    }
-
-    public ResultSet customerRoom() throws SQLException {
-        query = "SELECT c.id ,c.first_name, c.last_name, cus_room.roomNr, cus_room.checkin, cus_room.checkout FROM customer_room cus_room JOIN customer c ON cus_room.customerID = c.id";
-        return (resultSet = connection.createStatement().executeQuery(query));
+        query = "SELECT r.* FROM room r LEFT JOIN customer c on r.roomNr = c.roomNr WHERE c.roomNr IS NULL";
+        return connection.createStatement().executeQuery(query);
     }
 }

@@ -1,42 +1,31 @@
 package haypsilcn.hotelmanagementsystem.customer;
 
-import haypsilcn.hotelmanagementsystem.hotel.Room;
-
-public class Customer {
-
+public class BookingCustomer {
+    private int id;
     private String firstName;
     private String lastName;
     private String birthday;
     private String gender;
-    private int room;
+    private String roomType;
     private String checkin;
     private String checkout;
-    private int id;
 
-    public Customer(String firstName, String lastName, String birthday, String gender) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthday = birthday;
-        this.gender = gender;
-    }
-
-    public Customer(int id, String firstName, String lastName, int room, String checkin, String checkout) {
+    public BookingCustomer(int id, String firstName, String lastName, String birthday, String gender, String roomType, String checkin, String checkout) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.room= room;
+        this.birthday = birthday;
+        this.gender = gender;
+        this.roomType = roomType;
         this.checkin = checkin;
         this.checkout = checkout;
     }
 
-    public Customer(int id, String firstName, String lastName, String birthday, String gender, int room, String checkin, String checkout) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthday = birthday;
-        this.gender = gender;
-        this.room = room;
-        this.checkin = checkin;
-        this.checkout = checkout;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -68,12 +57,16 @@ public class Customer {
         return gender;
     }
 
-    public int getRoom() {
-        return room;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
-    public void setRoom(int room) {
-        this.room = room;
+    public String getRoomType() {
+        return roomType;
+    }
+
+    public void setRoomType(String roomType) {
+        this.roomType = roomType;
     }
 
     public String getCheckin() {
@@ -90,17 +83,5 @@ public class Customer {
 
     public void setCheckout(String checkout) {
         this.checkout = checkout;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 }

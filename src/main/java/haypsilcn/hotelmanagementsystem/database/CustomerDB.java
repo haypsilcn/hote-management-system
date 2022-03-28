@@ -18,7 +18,11 @@ public class CustomerDB implements Database{
     }
 
     public ResultSet showAll() throws SQLException {
-        query = "SELECT * FROM customer ORDER BY id";
-        return (resultSet = connection.createStatement().executeQuery(query));
+        query = "SELECT * FROM customer ORDER BY checkin, roomNr ";
+        return connection.createStatement().executeQuery(query);
+    }
+    public ResultSet showBooking() throws SQLException {
+        query = "SELECT * FROM booking_customer ORDER BY checkin";
+        return connection.createStatement().executeQuery(query);
     }
 }

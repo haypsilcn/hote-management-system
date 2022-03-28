@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -17,8 +22,8 @@
       </Text>
       <MenuBar fx:id="menuBar" layoutY="1.0" prefHeight="26.0" prefWidth="1507.0">
       </MenuBar>
-      <TabPane fx:id="tabPane" layoutY="205.0" prefHeight="576.0" prefWidth="1507.0" tabClosingPolicy="UNAVAILABLE" />
-      <TextField fx:id="search" layoutX="60.0" layoutY="138.0" prefHeight="40.0" prefWidth="691.0">
+      <TabPane fx:id="tabPane" layoutY="205.0" prefHeight="576.0" prefWidth="793.0" tabClosingPolicy="UNAVAILABLE" />
+      <TextField fx:id="search" layoutX="62.0" layoutY="136.0" prefHeight="40.0" prefWidth="691.0">
          <font>
             <Font size="20.0" />
          </font>
@@ -28,5 +33,200 @@
             <Font size="18.0" />
          </font>
       </Button>
+      <TabPane fx:id="addTabPane" layoutX="803.0" layoutY="206.0" prefHeight="576.0" prefWidth="703.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+            <Tab fx:id="newAdminTab" text="new admin">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="63.0" prefHeight="40.0" prefWidth="100.0" text="Username">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="newUsernameTextField" layoutX="218.0" layoutY="60.0" prefHeight="40.0" prefWidth="460.0">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </TextField>
+                        <Label layoutX="14.0" layoutY="137.0" prefHeight="40.0" prefWidth="100.0" text="Password">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <PasswordField fx:id="passwordField" layoutX="218.0" layoutY="135.0" prefHeight="40.0" prefWidth="460.0">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </PasswordField>
+                        <PasswordField fx:id="confirmPass" layoutX="218.0" layoutY="210.0" prefHeight="40.0" prefWidth="460.0">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </PasswordField>
+                        <Label layoutX="14.0" layoutY="212.0" prefHeight="40.0" prefWidth="168.0" text="Confirm password">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="newAdminButton" layoutX="578.0" layoutY="474.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Add">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="newEmployeeTab" text="new employee">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="29.0" prefHeight="40.0" prefWidth="121.0" text="First name">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="employeeFirstName" layoutX="218.0" layoutY="26.0" prefHeight="40.0" prefWidth="460.0">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </TextField>
+                        <Label layoutX="14.0" layoutY="103.0" prefHeight="40.0" prefWidth="100.0" text="Last name">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="employeeLastName" layoutX="218.0" layoutY="101.0" prefHeight="40.0" prefWidth="460.0">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </TextField>
+                        <Label layoutX="14.0" layoutY="176.0" prefHeight="40.0" prefWidth="168.0" text="DoB">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <DatePicker fx:id="employeeDoB" layoutX="218.0" layoutY="176.0" prefHeight="40.0" prefWidth="198.0" />
+                        <Label layoutX="14.0" layoutY="251.0" prefHeight="40.0" prefWidth="100.0" text="Gender">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="employeeGender" layoutX="218.0" layoutY="251.0" prefHeight="40.0" prefWidth="76.0" />
+                        <Label layoutX="14.0" layoutY="326.0" prefHeight="40.0" prefWidth="143.0" text="Department">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="employeeDepartment" layoutX="218.0" layoutY="326.0" prefHeight="40.0" prefWidth="150.0" />
+                        <Button fx:id="newEmployeeButton" layoutX="578.0" layoutY="474.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Add">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="newRoomTab" text="new room">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="roomTextField" layoutX="218.0" layoutY="60.0" prefHeight="40.0" prefWidth="460.0">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </TextField>
+                        <Label layoutX="14.0" layoutY="137.0" prefHeight="40.0" prefWidth="100.0" text="Type">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="14.0" layoutY="62.0" prefHeight="40.0" prefWidth="168.0" text="Room number">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="roomType" layoutX="218.0" layoutY="137.0" prefHeight="40.0" prefWidth="150.0" />
+                        <Button fx:id="newRoomButton" layoutX="578.0" layoutY="474.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Add">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab fx:id="newCustomerTab" text="new customer">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="14.0" layoutY="29.0" prefHeight="40.0" prefWidth="121.0" text="First name">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="customerFirstName" layoutX="218.0" layoutY="26.0" prefHeight="40.0" prefWidth="460.0">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </TextField>
+                        <Label layoutX="14.0" layoutY="103.0" prefHeight="40.0" prefWidth="100.0" text="Last name">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="customerLastName" layoutX="218.0" layoutY="101.0" prefHeight="40.0" prefWidth="460.0">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </TextField>
+                        <Label layoutX="14.0" layoutY="176.0" prefHeight="40.0" prefWidth="168.0" text="DoB">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <DatePicker fx:id="customerDoB" layoutX="218.0" layoutY="176.0" prefHeight="40.0" prefWidth="198.0" />
+                        <Label layoutX="14.0" layoutY="251.0" prefHeight="40.0" prefWidth="100.0" text="Gender">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="customerGender" layoutX="218.0" layoutY="251.0" prefHeight="40.0" prefWidth="150.0" />
+                        <Label layoutX="14.0" layoutY="326.0" prefHeight="40.0" prefWidth="143.0" text="Room number">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="customerRoom" layoutX="218.0" layoutY="324.0" prefHeight="43.0" prefWidth="150.0">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </TextField>
+                        <Label layoutX="14.0" layoutY="476.0" prefHeight="40.0" prefWidth="143.0" text="Check-out">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="14.0" layoutY="401.0" prefHeight="40.0" prefWidth="143.0" text="Check-in">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <DatePicker fx:id="customerCheckin" layoutX="218.0" layoutY="401.0" prefHeight="40.0" prefWidth="198.0" />
+                        <DatePicker fx:id="customerCheckout" layoutX="218.0" layoutY="476.0" prefHeight="40.0" prefWidth="198.0" />
+                        <Button fx:id="newCustomerButton" layoutX="578.0" layoutY="474.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Add">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <Button fx:id="reload" layoutX="1368.0" layoutY="125.0" mnemonicParsing="false" text="Reload" />
    </children>
 </AnchorPane>

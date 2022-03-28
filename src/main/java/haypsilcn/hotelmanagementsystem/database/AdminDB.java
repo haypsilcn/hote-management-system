@@ -1,5 +1,6 @@
 package haypsilcn.hotelmanagementsystem.database;
 
+import haypsilcn.hotelmanagementsystem.exceptions.AdminAlreadyExists;
 import haypsilcn.hotelmanagementsystem.exceptions.AdminLoginAuthorize;
 import haypsilcn.hotelmanagementsystem.exceptions.AdminNotFound;
 import haypsilcn.hotelmanagementsystem.exceptions.AdminUpdatePasswordException;
@@ -74,5 +75,23 @@ public class AdminDB implements Database{
         query = "SELECT * FROM admin WHERE admin.user != '" + admin.getUsername() + "' ORDER BY id";
         resultSet = connection.createStatement().executeQuery(query);
         return resultSet;
+    }
+
+    public boolean createAdmin(Admin admin) throws SQLException, AdminAlreadyExists {
+        query = "SELECT * FROM admin WHERE user = '" + admin.getUsername() + "'";
+        resultSet = connection.createStatement().executeQuery(query);
+
+        // if new admin name didn't exist in db then create new admin
+        // otherwise, return false
+        if (!resultSet.next()) {
+            query = "INSERT INTO admin (user, password) VALUES ('" + admin.getUsername() + "', '" + admin.getPassword() + "')";
+            if (connection.createStatement().executeUpdate(query) > 0) {
+                System.out.println("Created new user <<" + admin.getUsername() + ">> with password = " + admin.getPassword());
+                validate = true;
+            } else
+                validate = false;
+        } else
+            throw new AdminAlreadyExists("Admin <<" + admin.getUsername() + ">> is already exists!");
+        return validate;
     }
 }
