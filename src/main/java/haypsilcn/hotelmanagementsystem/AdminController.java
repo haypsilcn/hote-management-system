@@ -28,6 +28,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
+import java.util.Comparator;
 import java.util.Objects;
 
 public class AdminController {
@@ -50,6 +52,10 @@ public class AdminController {
     public Button luxuryRoomButton;
     @FXML
     public Button singleRoomButton;
+    @FXML
+    public Button reservationButton;
+    @FXML
+    public Button checkOutButton;
 
     @FXML
     public PasswordField passwordField;
@@ -98,7 +104,18 @@ public class AdminController {
     public ComboBox<String> luxuryGender3;
     @FXML
     public ComboBox<String> luxuryGender4;
-
+    @FXML
+    public ComboBox<String> reservationGender;
+    @FXML
+    public ComboBox<Integer> singleQuantity;
+    @FXML
+    public ComboBox<Integer> doubleQuantity;
+    @FXML
+    public ComboBox<Integer> deluxeQuantity;
+    @FXML
+    public ComboBox<Integer> luxuryQuantity;
+    @FXML
+    public ComboBox<Integer> checkOutRoom;
 
     @FXML
     public DatePicker employeeDoB;
@@ -140,7 +157,8 @@ public class AdminController {
     public DatePicker luxuryCheckOut;
     @FXML
     public DatePicker luxuryDoB2;
-
+    @FXML
+    public DatePicker reservationDoB;
     @FXML
     public DatePicker luxuryKidDoB;
     @FXML
@@ -154,6 +172,14 @@ public class AdminController {
     public CheckBox doubleKidTickBox;
     @FXML
     public CheckBox luxuryKidTickBox;
+    @FXML
+    public CheckBox singleCheckBox;
+    @FXML
+    public CheckBox doubleCheckBox;
+    @FXML
+    public CheckBox deluxeCheckBox;
+    @FXML
+    public CheckBox luxuryCheckBox;
 
     @FXML
     public Text welcomeText;
@@ -183,6 +209,10 @@ public class AdminController {
     public Tab deluxeRoomTab;
     @FXML
     public Tab luxuryRoomTab;
+    @FXML
+    public Tab reservationTab;
+    @FXML
+    public Tab checkOutTab;
 
     @FXML
     public TextField search;
@@ -250,6 +280,14 @@ public class AdminController {
     public TextField luxuryLastName4;
     @FXML
     public TextField singleFirstName;
+    @FXML
+    public TextField reservationFirstName;
+    @FXML
+    public TextField reservationLastName;
+    @FXML
+    public DatePicker reservationCheckIn;
+    @FXML
+    public DatePicker reservationCheckOut;
 
     private Stage stage;
     private Scene scene;
@@ -366,15 +404,12 @@ public class AdminController {
 
         tabPane.getTabs().addAll(adminTab, customerTab, emptyRoomTab, employeeTab, bookingTab);
 
-
         newAdminTab.setStyle("-fx-font-size: 15px");
-        newEmployeeTab.setStyle("-fx-font-size: 15px");
-        checkInTab.setStyle("-fx-font-size: 15px");
-        newRoomTab.setStyle("-fx-font-size: 15px");
-
         setNewEmployeeTab();
         setNewRoomTab();
         setCheckInTab();
+        setReservationTab();
+        setCheckOutTab();
 
         newAdminButton.setOnAction(event -> {
             try {
@@ -420,6 +455,83 @@ public class AdminController {
             roomNrTextField.clear();
         });
 
+        /*
+        After checking in for the current selected room, removes it from the combo box
+        And update this room to the checkout combo box in checkout tab
+        Then set new selected room = new first room in the list
+         */
+        singleRoomButton.setOnAction(event -> {
+            try {
+                singleRoomCheckin();
+                if (checkOutRoom.isDisable())
+                    checkOutRoom.setDisable(false);
+                if (!checkOutRoom.getItems().isEmpty())
+                    checkOutRoom.getItems().clear();
+
+                resultSet = roomDB.getCheckOutRoom();
+                while (resultSet.next())
+                    checkOutRoom.getItems().add(resultSet.getInt(1));
+//                checkOutRoom.getItems().sort(Comparator.naturalOrder());
+                checkOutRoom.setValue(checkOutRoom.getItems().get(0));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            singleFirstName.clear();
+            singleLastName.clear();
+            setBirthdayDatePicker(singleDoB, 18);
+            setCheckInOutDatePicker(singleCheckIn, singleCheckOut);
+            singleRoomNr.getItems().remove(singleRoomNr.getValue());
+            singleRoomNr.setValue(singleRoomNr.getItems().get(0));
+        });
+
+        /*
+        Reload customer table then remove the current selected value in combo box
+        Then check of after remove the current value, whether the combobox is empty -> disable
+        Otherwise, set new selected value = next value
+         */
+        checkOutButton.setOnAction(event -> {
+            try {
+                roomDB.checkOut(checkOutRoom.getValue());
+                reloadCustomerTable();
+
+                if (!singleRoomNr.getItems().isEmpty())
+                    singleRoomNr.getItems().clear();
+                resultSet = roomDB.getEmptyRoom("Single");
+                while (resultSet.next())
+                    singleRoomNr.getItems().add(resultSet.getInt(1));
+                singleRoomNr.setValue(singleRoomNr.getItems().get(0));
+
+                if (!doubleRoomNr.getItems().isEmpty())
+                    doubleRoomNr.getItems().clear();
+                resultSet = roomDB.getEmptyRoom("Double");
+                while (resultSet.next())
+                    doubleRoomNr.getItems().add(resultSet.getInt(1));
+                doubleRoomNr.setValue(singleRoomNr.getItems().get(0));
+
+                if (!deluxeRoomNr.getItems().isEmpty())
+                    deluxeRoomNr.getItems().clear();
+                resultSet = roomDB.getEmptyRoom("Deluxe");
+                while (resultSet.next())
+                    deluxeRoomNr.getItems().add(resultSet.getInt(1));
+                deluxeRoomNr.setValue(singleRoomNr.getItems().get(0));
+
+                if (!luxuryRoomNr.getItems().isEmpty())
+                    luxuryRoomNr.getItems().clear();
+                resultSet = roomDB.getEmptyRoom("Luxury");
+                while (resultSet.next())
+                    luxuryRoomNr.getItems().add(resultSet.getInt(1));
+                luxuryRoomNr.setValue(singleRoomNr.getItems().get(0));
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            checkOutRoom.getItems().remove(checkOutRoom.getValue());
+            if (checkOutRoom.getItems().isEmpty())
+                checkOutRoom.setDisable(true);
+            else
+                checkOutRoom.setValue(checkOutRoom.getItems().get(0));
+        });
     }
 
 
@@ -566,21 +678,22 @@ public class AdminController {
         resultSet = customerDB.showBooking();
         while (resultSet.next())
             bookingCustomerTable.getItems().add(new BookingCustomer(
-                    resultSet.getInt(1),
+                    resultSet.getString(1),
                     resultSet.getString(2),
                     resultSet.getString(3),
                     resultSet.getString(4),
                     resultSet.getString(5),
                     resultSet.getString(6),
-                    resultSet.getString(7),
-                    resultSet.getString(8)
+                    resultSet.getString(7)
             ));
 
         return bookingCustomerTable;
     }
 
     private void setNewEmployeeTab() {
-        setDatePicker(employeeDoB);
+        newEmployeeTab.setStyle("-fx-font-size: 15px");
+
+        setBirthdayDatePicker(employeeDoB, 18);
         setComboBoxGender(employeeGender);
 
         // set up combo box department
@@ -590,6 +703,8 @@ public class AdminController {
     }
 
     private void setNewRoomTab() {
+        newRoomTab.setStyle("-fx-font-size: 15px");
+
         // set default value for combo box type of room
         roomType.getItems().addAll("Single", "Double", "Deluxe", "Luxury");
         roomType.setValue("Double");
@@ -602,20 +717,48 @@ public class AdminController {
         }));
     }
 
+    private void setReservationTab() {
+        reservationTab.setStyle("-fx-font-size: 15px");
+
+        setBirthdayDatePicker(reservationDoB, 18);
+        setComboBoxGender(reservationGender);
+        setCheckInOutDatePicker(reservationCheckIn, reservationCheckOut);
+        setRoomCheckBoxAction(singleCheckBox, singleQuantity, "Single");
+        setRoomCheckBoxAction(doubleCheckBox, doubleQuantity, "Double");
+        setRoomCheckBoxAction(deluxeCheckBox, deluxeQuantity, "Deluxe");
+        setRoomCheckBoxAction(luxuryCheckBox, luxuryQuantity, "Luxury");
+    }
+
+    private void setCheckOutTab() throws SQLException {
+        checkOutTab.setStyle("-fx-font-size: 15px");
+        checkOutRoom.setStyle("-fx-font-size: 15px");
+
+        resultSet = roomDB.getCheckOutRoom();
+        if (!roomDB.getCheckOutRoom().next())
+            checkOutRoom.setDisable(true);
+        else {
+            while (resultSet.next())
+                checkOutRoom.getItems().add(resultSet.getInt(1));
+            checkOutRoom.setValue(checkOutRoom.getItems().get(0));
+        }
+
+        checkOutRoom.getItems().sorted();
+
+    }
+
     private void setCheckInTab() throws SQLException {
+        checkInTab.setStyle("-fx-font-size: 15px");
         setSingleRoomTab();
         setDoubleRoomTab();
         setDeluxeRoomTab();
         setLuxuryRoomTab();
-
     }
 
     private void setSingleRoomTab() throws SQLException {
         singleRoomTab.setStyle("-fx-font-size: 15px");
 
-        setDatePicker(singleDoB);
-        setDatePicker(singleCheckIn);
-        setDatePicker(singleCheckOut);
+        setBirthdayDatePicker(singleDoB, 18);
+        setCheckInOutDatePicker(singleCheckIn, singleCheckOut);
         setComboBoxGender(singleGender);
 
         resultSet = roomDB.getEmptyRoom("Single");
@@ -629,11 +772,10 @@ public class AdminController {
     private void setDoubleRoomTab() throws SQLException {
         doubleRoomTab.setStyle("-fx-font-size: 15px");
 
-        setCheckBoxAction(doubleKidTickBox, doubleKidFirstName, doubleKidLastName, doubleKidDoB, doubleKidGender);
-        setDatePicker(doubleDoB1);
-        setDatePicker(doubleDoB2);
-        setDatePicker(doubleCheckIn);
-        setDatePicker(doubleCheckOut);
+        setKidCheckBoxAction(doubleKidTickBox, doubleKidFirstName, doubleKidLastName, doubleKidDoB, doubleKidGender);
+        setBirthdayDatePicker(doubleDoB1, 18);
+        setBirthdayDatePicker(doubleDoB2, 0);
+        setCheckInOutDatePicker(doubleCheckIn, doubleCheckOut);
 
         setComboBoxGender(doubleGender1);
         setComboBoxGender(doubleGender2);
@@ -649,13 +791,12 @@ public class AdminController {
     private void setDeluxeRoomTab() throws SQLException {
         deluxeRoomTab.setStyle("-fx-font-size: 15px");
 
-        setCheckBoxAction(deluxeKidTickBox, deluxeKidFirstName, deluxeKidLastName, deluxeKidDoB, deluxeKidGender);
-        setDatePicker(deluxeDoB1);
-        setDatePicker(deluxeDoB2);
-        setDatePicker(deluxeDoB3);
-        setDatePicker(deluxeDoB4);
-        setDatePicker(deluxeCheckIn);
-        setDatePicker(deluxeCheckOut);
+        setKidCheckBoxAction(deluxeKidTickBox, deluxeKidFirstName, deluxeKidLastName, deluxeKidDoB, deluxeKidGender);
+        setBirthdayDatePicker(deluxeDoB1, 18);
+        setBirthdayDatePicker(deluxeDoB2, 0);
+        setBirthdayDatePicker(deluxeDoB3, 0);
+        setBirthdayDatePicker(deluxeDoB4, 0);
+        setCheckInOutDatePicker(deluxeCheckIn, deluxeCheckOut);
 
         setComboBoxGender(deluxeGender1);
         setComboBoxGender(deluxeGender2);
@@ -673,13 +814,12 @@ public class AdminController {
     private void setLuxuryRoomTab() throws SQLException {
         luxuryRoomTab.setStyle("-fx-font-size: 15px");
 
-        setCheckBoxAction(luxuryKidTickBox, luxuryKidFirstName, luxuryKidLastName, luxuryKidDoB, luxuryKidGender);
-        setDatePicker(luxuryDoB1);
-        setDatePicker(luxuryDoB2);
-        setDatePicker(luxuryDoB3);
-        setDatePicker(luxuryDoB4);
-        setDatePicker(luxuryCheckIn);
-        setDatePicker(luxuryCheckOut);
+        setKidCheckBoxAction(luxuryKidTickBox, luxuryKidFirstName, luxuryKidLastName, luxuryKidDoB, luxuryKidGender);
+        setBirthdayDatePicker(luxuryDoB1, 18);
+        setBirthdayDatePicker(luxuryDoB2, 0);
+        setBirthdayDatePicker(luxuryDoB3, 0);
+        setBirthdayDatePicker(luxuryDoB4, 0);
+        setCheckInOutDatePicker(luxuryCheckIn, luxuryCheckOut);
 
         setComboBoxGender(luxuryGender1);
         setComboBoxGender(luxuryGender2);
@@ -721,6 +861,8 @@ public class AdminController {
     }
 
     private void createEmployee() throws SQLException, EmployeeAlreadyExist, DateTimeParseException {
+
+
         if (!employeeFirstName.getText().isEmpty() && !employeeLastName.getText().isEmpty()) {
             Employee newEmployee = new Employee(
                     employeeFirstName.getText(),
@@ -765,10 +907,33 @@ public class AdminController {
         }
     }
 
-    private void singleRoomCheckin() {
-        if (!singleFirstName.getText().isEmpty() && !singleLastName.getText().isEmpty()) {
+    private void createReservation() {
 
-        }
+
+
+    }
+
+    private void checkOut() {
+
+    }
+
+    private void singleRoomCheckin() throws SQLException {
+        if (!singleFirstName.getText().isEmpty() && !singleLastName.getText().isEmpty()) {
+            Customer newCustomer = new Customer(
+                    singleFirstName.getText(),
+                    singleLastName.getText(),
+                    LocalDate.parse(singleDoB.getEditor().getText(), formatter).toString(),
+                    singleGender.getValue(),
+                    LocalDate.parse(singleCheckIn.getEditor().getText(), formatter).toString(),
+                    LocalDate.parse(singleCheckOut.getEditor().getText(), formatter).toString(),
+                    singleRoomNr.getValue()
+            );
+            roomDB.checkIn(newCustomer);
+            reloadCustomerTable();
+        } else if (singleFirstName.getText().isEmpty())
+            showAlert("Please insert customer first name!");
+        else if (singleLastName.getText().isEmpty())
+            showAlert("Please insert customer last name!");
     }
 
     private void reloadAdminTable(Admin admin) throws SQLException {
@@ -834,12 +999,86 @@ public class AdminController {
         comboBoxGender.setStyle("-fx-font-size: 15px");
     }
 
-    private void setDatePicker(DatePicker datePicker) {
-        datePicker.setValue(LocalDate.now());
+    /**
+     * Customer must be in between 110 and 'minimumAge' yo
+     * In Double, Deluxe and Luxury room at least on customer > 18 yo
+     * @param datePicker
+     */
+    private void setBirthdayDatePicker(DatePicker datePicker, int minimumAge) {
         datePicker.setStyle("-fx-font-size: 15px");
+
+        datePicker.setValue(LocalDate.now().minusYears(minimumAge));
+
+        datePicker.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                setDisable(empty || date.compareTo(datePicker.getValue()) > 0 || date.compareTo(LocalDate.now().minusYears(110)) < 0);
+            }
+        });
     }
 
-    private void setCheckBoxAction(CheckBox checkBox, TextField firstName, TextField lastName, DatePicker dob, ComboBox<String> gender) {
+    /**
+     * Kid must be in range between 15 and 0 yo
+     * @param datePicker
+     */
+    private void setKidBirthdayDatePicker(DatePicker datePicker) {
+        datePicker.setStyle("-fx-font-size: 15px");
+
+        datePicker.setValue(LocalDate.now().minusYears(12).plusDays(1));
+
+        datePicker.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                setDisable(empty || date.compareTo(datePicker.getValue()) < 0 || date.compareTo(LocalDate.now()) > 0);
+            }
+        });
+    }
+
+    /**
+     * Checkin date must be at least today date, cannot be date in the past
+     * Checkout date must be after the checkin date at least 1 day
+     * @param checkInDate
+     * @param checkOutDate
+     */
+    private void setCheckInOutDatePicker(DatePicker checkInDate, DatePicker checkOutDate) {
+        checkInDate.setStyle("-fx-font-size: 15px");
+        checkOutDate.setStyle("-fx-font-size: 15px");
+
+        checkInDate.setValue(LocalDate.now());
+        checkOutDate.setValue(checkInDate.getValue().plusDays(1));
+
+        checkInDate.setOnAction(event -> checkOutDate.setValue(checkInDate.getValue().plusDays(1)));
+
+        checkInDate.setDayCellFactory(datePicker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                setDisable(empty || date.compareTo(checkInDate.getValue()) < 0);
+            }
+        });
+
+        checkOutDate.setDayCellFactory(datePicker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                long period = ChronoUnit.DAYS.between(checkInDate.getValue(), date);
+                setTooltip(new Tooltip("Check-in to stay for " + period + " days"));
+                setDisable(empty || date.compareTo(checkInDate.getValue()) < 1);
+            }
+        });
+
+
+    }
+
+    /**
+     * By default, all the information fields of Kid customer must be disabled
+     * Only when the Kid checkbox is checked then those fields is active
+     * When uncheck the box, all the fields must be disabled again
+     * @param checkBox
+     * @param firstName
+     * @param lastName
+     * @param dob
+     * @param gender
+     */
+    private void setKidCheckBoxAction(CheckBox checkBox, TextField firstName, TextField lastName, DatePicker dob, ComboBox<String> gender) {
 
         /*
          * Property description:
@@ -867,10 +1106,53 @@ public class AdminController {
                 lastName.setDisable(false);
                 dob.setDisable(false);
                 gender.setDisable(false);
-                setDatePicker(dob);
+                setKidBirthdayDatePicker(dob);
                 setComboBoxGender(gender);
             }
         });
-
     }
+
+    private void setRoomCheckBoxAction(CheckBox checkBox, ComboBox<Integer> amountRoom, String roomType) {
+        amountRoom.setStyle("-fx-font-size: 15px");
+
+        /*
+         * Property description:
+         * Determines whether the user toggling the CheckBox should cycle through all three states: checked, unchecked, and undefined.
+         * If true then all three states will be cycled through;
+         * if false then only checked and unchecked will be cycled.
+         */
+        checkBox.setAllowIndeterminate(false);
+        checkBox.setSelected(false); // checkbox default as unchecked
+        amountRoom.setDisable(true);
+
+        try {
+            int emptyRoom = roomDB.getAmountEmptyRoom(roomType, reservationCheckIn.getValue(), reservationCheckOut.getValue());
+            int i = 1;
+            while (emptyRoom-- > 0) {
+                amountRoom.getItems().add(i++);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // trigger the action when toggling the checkbox
+        checkBox.selectedProperty().addListener((observableValue, unchecked, checked) -> {
+            if (unchecked)
+                amountRoom.setDisable(true);
+            else {
+                amountRoom.setDisable(false);
+
+                if (amountRoom.getValue() == null)
+                    amountRoom.setValue(1);
+                else
+                    amountRoom.setValue(amountRoom.getValue());
+
+
+            }
+        });
+    }
+
+    /*private void setEmptyRoomAmount(ComboBox<Integer> comboBox, String roomType, DatePicker checkIn, DatePicker checkOut) {
+        int emptyRoom = roomDB.get
+    }*/
 }

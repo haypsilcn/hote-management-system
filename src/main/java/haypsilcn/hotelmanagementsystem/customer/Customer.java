@@ -13,18 +13,12 @@ public class Customer {
     private String checkout;
     private int id;
 
-    public Customer(String firstName, String lastName, String birthday, String gender) {
+    public Customer(String firstName, String lastName, String birthday, String gender, String checkin, String checkout, int room) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthday = birthday;
         this.gender = gender;
-    }
-
-    public Customer(int id, String firstName, String lastName, int room, String checkin, String checkout) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.room= room;
+        this.room = room;
         this.checkin = checkin;
         this.checkout = checkout;
     }

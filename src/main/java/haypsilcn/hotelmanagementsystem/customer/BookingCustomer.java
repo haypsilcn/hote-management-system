@@ -10,7 +10,7 @@ public class BookingCustomer {
     private String checkin;
     private String checkout;
 
-    public BookingCustomer(int id, String firstName, String lastName, String birthday, String gender, String roomType, String checkin, String checkout) {
+    public BookingCustomer(String firstName, String lastName, String birthday, String gender, String roomType, String checkin, String checkout) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
