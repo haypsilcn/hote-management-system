@@ -31,6 +31,7 @@ import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.util.Comparator;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class AdminController {
 
@@ -122,13 +123,9 @@ public class AdminController {
     @FXML
     public DatePicker singleDoB;
     @FXML
-    public DatePicker singleCheckIn;
-    @FXML
     public DatePicker singleCheckOut;
     @FXML
     public DatePicker doubleDoB1;
-    @FXML
-    public DatePicker doubleCheckIn;
     @FXML
     public DatePicker doubleCheckOut;
     @FXML
@@ -137,8 +134,6 @@ public class AdminController {
     public DatePicker doubleKidDoB;
     @FXML
     public DatePicker deluxeDoB1;
-    @FXML
-    public DatePicker deluxeCheckIn;
     @FXML
     public DatePicker deluxeCheckOut;
     @FXML
@@ -151,8 +146,6 @@ public class AdminController {
     public DatePicker deluxeDoB4;
     @FXML
     public DatePicker luxuryDoB1;
-    @FXML
-    public DatePicker luxuryCheckIn;
     @FXML
     public DatePicker luxuryCheckOut;
     @FXML
@@ -313,6 +306,7 @@ public class AdminController {
     private final ObservableList<Room> roomObservableList = FXCollections.observableArrayList();
     private final ObservableList<Customer> customerObservableList = FXCollections.observableArrayList();
     private final ObservableList<Employee> employeeObservableList = FXCollections.observableArrayList();
+    private final ObservableList<BookingCustomer> bookingObservableList = FXCollections.observableArrayList();
 
 
     public void setupAdmin(Admin admin) throws SQLException {
@@ -455,6 +449,25 @@ public class AdminController {
             roomNrTextField.clear();
         });
 
+        reservationButton.setOnAction(event -> {
+            try {
+                if (createReservation()) {
+                    tabPane.getSelectionModel().select(bookingTab);
+                    reservationFirstName.clear();
+                    reservationLastName.clear();
+                    singleCheckBox.setSelected(false);
+                    doubleCheckBox.setSelected(false);
+                    deluxeCheckBox.setSelected(false);
+                    luxuryCheckBox.setSelected(false);
+                    setBirthdayDatePicker(reservationDoB, 18);
+                    setCheckInOutDatePicker(reservationCheckIn, reservationCheckOut);
+                    setComboBoxGender(reservationGender);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
+
         /*
         After checking in for the current selected room, removes it from the combo box
         And update this room to the checkout combo box in checkout tab
@@ -479,8 +492,9 @@ public class AdminController {
 
             singleFirstName.clear();
             singleLastName.clear();
+            setComboBoxGender(singleGender);
             setBirthdayDatePicker(singleDoB, 18);
-            setCheckInOutDatePicker(singleCheckIn, singleCheckOut);
+            singleCheckOut.setValue(LocalDate.now().plusDays(1));
             singleRoomNr.getItems().remove(singleRoomNr.getValue());
             singleRoomNr.setValue(singleRoomNr.getItems().get(0));
         });
@@ -662,6 +676,7 @@ public class AdminController {
         TableColumn<BookingCustomer, String> dob = new TableColumn<>("dob");
         TableColumn<BookingCustomer, String> gender = new TableColumn<>("gender");
         TableColumn<BookingCustomer, String> roomType = new TableColumn<>("roomType");
+        TableColumn<BookingCustomer, Integer> roomAmount = new TableColumn<>("roomAmount");
         TableColumn<BookingCustomer, String> checkin = new TableColumn<>("checkin");
         TableColumn<BookingCustomer, String> checkout = new TableColumn<>("checkout");
 
@@ -671,21 +686,12 @@ public class AdminController {
         dob.setCellValueFactory(new PropertyValueFactory<>("birthday"));
         gender.setCellValueFactory(new PropertyValueFactory<>("gender"));
         roomType.setCellValueFactory(new PropertyValueFactory<>("roomType"));
+        roomAmount.setCellValueFactory(new PropertyValueFactory<>("roomAmount"));
         checkin.setCellValueFactory(new PropertyValueFactory<>("checkin"));
         checkout.setCellValueFactory(new PropertyValueFactory<>("checkout"));
 
-        bookingCustomerTable.getColumns().addAll(id, firstName, lastName, dob, gender, roomType, checkin, checkout);
-        resultSet = customerDB.showBooking();
-        while (resultSet.next())
-            bookingCustomerTable.getItems().add(new BookingCustomer(
-                    resultSet.getString(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3),
-                    resultSet.getString(4),
-                    resultSet.getString(5),
-                    resultSet.getString(6),
-                    resultSet.getString(7)
-            ));
+        bookingCustomerTable.getColumns().addAll(id, firstName, lastName, dob, gender, roomType, roomAmount, checkin, checkout);
+        reloadBookingTable();
 
         return bookingCustomerTable;
     }
@@ -723,10 +729,11 @@ public class AdminController {
         setBirthdayDatePicker(reservationDoB, 18);
         setComboBoxGender(reservationGender);
         setCheckInOutDatePicker(reservationCheckIn, reservationCheckOut);
-        setRoomCheckBoxAction(singleCheckBox, singleQuantity, "Single");
-        setRoomCheckBoxAction(doubleCheckBox, doubleQuantity, "Double");
-        setRoomCheckBoxAction(deluxeCheckBox, deluxeQuantity, "Deluxe");
-        setRoomCheckBoxAction(luxuryCheckBox, luxuryQuantity, "Luxury");
+
+        setEmptyRoomReservation( singleCheckBox, doubleCheckBox, deluxeCheckBox, luxuryCheckBox, singleQuantity,"Single");
+        setEmptyRoomReservation( doubleCheckBox, singleCheckBox, deluxeCheckBox, luxuryCheckBox, doubleQuantity,"Double");
+        setEmptyRoomReservation( deluxeCheckBox, singleCheckBox, doubleCheckBox, luxuryCheckBox, deluxeQuantity,"Deluxe");
+        setEmptyRoomReservation( luxuryCheckBox, singleCheckBox, doubleCheckBox, deluxeCheckBox, luxuryQuantity,"Luxury");
     }
 
     private void setCheckOutTab() throws SQLException {
@@ -758,7 +765,7 @@ public class AdminController {
         singleRoomTab.setStyle("-fx-font-size: 15px");
 
         setBirthdayDatePicker(singleDoB, 18);
-        setCheckInOutDatePicker(singleCheckIn, singleCheckOut);
+        singleCheckOut.setValue(LocalDate.now().plusDays(1));
         setComboBoxGender(singleGender);
 
         resultSet = roomDB.getEmptyRoom("Single");
@@ -775,7 +782,7 @@ public class AdminController {
         setKidCheckBoxAction(doubleKidTickBox, doubleKidFirstName, doubleKidLastName, doubleKidDoB, doubleKidGender);
         setBirthdayDatePicker(doubleDoB1, 18);
         setBirthdayDatePicker(doubleDoB2, 0);
-        setCheckInOutDatePicker(doubleCheckIn, doubleCheckOut);
+        doubleCheckOut.setValue(LocalDate.now().plusDays(1));
 
         setComboBoxGender(doubleGender1);
         setComboBoxGender(doubleGender2);
@@ -796,18 +803,19 @@ public class AdminController {
         setBirthdayDatePicker(deluxeDoB2, 0);
         setBirthdayDatePicker(deluxeDoB3, 0);
         setBirthdayDatePicker(deluxeDoB4, 0);
-        setCheckInOutDatePicker(deluxeCheckIn, deluxeCheckOut);
+        deluxeCheckOut.setValue(LocalDate.now().plusDays(1));
 
         setComboBoxGender(deluxeGender1);
         setComboBoxGender(deluxeGender2);
         setComboBoxGender(deluxeGender3);
         setComboBoxGender(deluxeGender4);
 
+
         resultSet = roomDB.getEmptyRoom("Deluxe");
         while (resultSet.next())
             deluxeRoomNr.getItems().add(resultSet.getInt(1));
         // set the default value = smallest empty room number
-        deluxeRoomNr.setValue(doubleRoomNr.getItems().get(0));
+        deluxeRoomNr.setValue(deluxeRoomNr.getItems().get(0));
         deluxeRoomNr.setStyle("-fx-font-size: 15px");
     }
 
@@ -819,7 +827,7 @@ public class AdminController {
         setBirthdayDatePicker(luxuryDoB2, 0);
         setBirthdayDatePicker(luxuryDoB3, 0);
         setBirthdayDatePicker(luxuryDoB4, 0);
-        setCheckInOutDatePicker(luxuryCheckIn, luxuryCheckOut);
+        luxuryCheckOut.setValue(LocalDate.now().plusDays(1));
 
         setComboBoxGender(luxuryGender1);
         setComboBoxGender(luxuryGender2);
@@ -907,10 +915,79 @@ public class AdminController {
         }
     }
 
-    private void createReservation() {
+    private boolean createReservation() throws SQLException {
+        boolean succeed = false;
+        if (!reservationFirstName.getText().isEmpty() && !reservationLastName.getText().isEmpty()) {
+            BookingCustomer newBookingCustomer = new BookingCustomer(
+                    reservationFirstName.getText(),
+                    reservationLastName.getText(),
+                    LocalDate.parse(reservationDoB.getEditor().getText(), formatter).toString(),
+                    reservationGender.getValue(),
+                    LocalDate.parse(reservationCheckIn.getEditor().getText(), formatter).toString(),
+                    LocalDate.parse(reservationCheckOut.getEditor().getText(), formatter).toString()
+                    );
+            if (!singleQuantity.isDisable()) {
+                if (singleQuantity.getValue() == null) {
+                    showAlert("Please choose at least 1 single room or uncheck it");
+                } else {
+                    newBookingCustomer.setRoomType("Single");
+                    newBookingCustomer.setRoomAmount(singleQuantity.getValue());
+                    if (roomDB.makeReservation(newBookingCustomer)) {
+                        succeed = true;
+                        reloadBookingTable();
+                    }
+                }
+            }
+            if (!doubleQuantity.isDisable()) {
+                if (doubleQuantity.getValue() == null)
+                    showAlert("Please choose at least 1 double room or uncheck it");
+                else {
+                    newBookingCustomer.setRoomType("Double");
+                    newBookingCustomer.setRoomAmount(doubleQuantity.getValue());
+                    if (roomDB.makeReservation(newBookingCustomer)) {
+                        succeed = true;
+                        reloadBookingTable();
+                    }
+                }
+            }
+            if (!deluxeQuantity.isDisable()) {
+                if (deluxeQuantity.getValue() == null)
+                    showAlert("Please choose at least 1 deluxe room or uncheck it");
+                else {
+                    newBookingCustomer.setRoomType("Deluxe");
+                    newBookingCustomer.setRoomAmount(deluxeQuantity.getValue());
+                    if (roomDB.makeReservation(newBookingCustomer)) {
+                        succeed = true;
+                        reloadBookingTable();
+                    }
+                }
+            }
+            if (!luxuryQuantity.isDisable()) {
+                if (luxuryQuantity.getValue() == null)
+                    showAlert("Please choose at least 1 luxury room or uncheck it");
+                else {
+                    newBookingCustomer.setRoomType("Luxury");
+                    newBookingCustomer.setRoomAmount(luxuryQuantity.getValue());
+                    if (roomDB.makeReservation(newBookingCustomer)) {
+                        succeed = true;
+                        reloadBookingTable();
+                    }
+                }
+            }
+            if (singleCheckBox.isSelected() && singleQuantity.isDisable())
+                showAlert("Single room is not available for this period. Please choose other room type.");
+            else if (doubleCheckBox.isSelected() && doubleQuantity.isDisable())
+                showAlert("Double room is not available for this period. Please choose other room type.");
+            else if (deluxeCheckBox.isSelected() && deluxeQuantity.isDisable())
+                showAlert("Deluxe room is not available for this period. Please choose other room type.");
+            else if (luxuryCheckBox.isSelected() && luxuryQuantity.isDisable())
+                showAlert("Luxury room is not available for this period. Please choose other room type.");
 
-
-
+        } else if (reservationFirstName.getText().isEmpty())
+            showAlert("Please insert customer first name");
+        else if (reservationLastName.getText().isEmpty())
+            showAlert("Please insert customer last name");
+        return succeed;
     }
 
     private void checkOut() {
@@ -924,7 +1001,7 @@ public class AdminController {
                     singleLastName.getText(),
                     LocalDate.parse(singleDoB.getEditor().getText(), formatter).toString(),
                     singleGender.getValue(),
-                    LocalDate.parse(singleCheckIn.getEditor().getText(), formatter).toString(),
+                    LocalDate.now().toString(),
                     LocalDate.parse(singleCheckOut.getEditor().getText(), formatter).toString(),
                     singleRoomNr.getValue()
             );
@@ -988,6 +1065,25 @@ public class AdminController {
         }
     }
 
+    private void reloadBookingTable() throws SQLException {
+        bookingObservableList.clear();
+        resultSet = customerDB.showAllBooking();
+        while (resultSet.next()) {
+            bookingObservableList.add(new BookingCustomer(
+                    resultSet.getInt(1), // id
+                    resultSet.getString(2), // first name
+                    resultSet.getString(3), // last name
+                    resultSet.getString(4), // dob
+                    resultSet.getString(5), // gender
+                    resultSet.getString(6), // room type
+                    resultSet.getInt(7), // room amount
+                    resultSet.getString(8), // check in
+                    resultSet.getString(9) // check out
+            ));
+            bookingCustomerTable.setItems(bookingObservableList);
+        }
+    }
+
     private void showAlert(String message) {
         alert.setContentText(message);
         alert.showAndWait();
@@ -1035,8 +1131,10 @@ public class AdminController {
     }
 
     /**
-     * Checkin date must be at least today date, cannot be date in the past
-     * Checkout date must be after the checkin date at least 1 day
+     * Checkin date by default is today date
+     * Checkout date by default is tomorrow and always is after at least 1 day after checkin date
+     * If the new checkin date is after the current checkin date, then checkout = new checkin + 1 day
+     * If the new checkin date is before the current checkin date, then checkout doesn't change
      * @param checkInDate
      * @param checkOutDate
      */
@@ -1047,12 +1145,21 @@ public class AdminController {
         checkInDate.setValue(LocalDate.now());
         checkOutDate.setValue(checkInDate.getValue().plusDays(1));
 
-        checkInDate.setOnAction(event -> checkOutDate.setValue(checkInDate.getValue().plusDays(1)));
+        AtomicReference<LocalDate> currentSelectedDate = new AtomicReference<>(checkInDate.getValue());
+
+        checkInDate.setOnAction(event -> {
+            if (checkInDate.getValue().isAfter(currentSelectedDate.get())) {
+                checkOutDate.setValue(checkInDate.getValue().plusDays(1));
+                currentSelectedDate.set(checkInDate.getValue());
+            }
+            else
+                checkOutDate.setValue(checkOutDate.getValue());
+        });
 
         checkInDate.setDayCellFactory(datePicker -> new DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
-                setDisable(empty || date.compareTo(checkInDate.getValue()) < 0);
+                setDisable(empty || date.compareTo(LocalDate.now()) < 0);
             }
         });
 
@@ -1060,12 +1167,10 @@ public class AdminController {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
                 long period = ChronoUnit.DAYS.between(checkInDate.getValue(), date);
-                setTooltip(new Tooltip("Check-in to stay for " + period + " days"));
+                setTooltip(new Tooltip("Booking to stay for " + period + " days"));
                 setDisable(empty || date.compareTo(checkInDate.getValue()) < 1);
             }
         });
-
-
     }
 
     /**
@@ -1112,8 +1217,7 @@ public class AdminController {
         });
     }
 
-    private void setRoomCheckBoxAction(CheckBox checkBox, ComboBox<Integer> amountRoom, String roomType) {
-        amountRoom.setStyle("-fx-font-size: 15px");
+    private void setEmptyRoomReservation(CheckBox checkBox1, CheckBox checkBox2, CheckBox checkBox3, CheckBox checkBox4, ComboBox<Integer> roomAmount, String roomType) {
 
         /*
          * Property description:
@@ -1121,38 +1225,42 @@ public class AdminController {
          * If true then all three states will be cycled through;
          * if false then only checked and unchecked will be cycled.
          */
-        checkBox.setAllowIndeterminate(false);
-        checkBox.setSelected(false); // checkbox default as unchecked
-        amountRoom.setDisable(true);
+        checkBox1.setAllowIndeterminate(false);
+        checkBox1.setSelected(false); // by default is unselected
+        roomAmount.setDisable(true);
 
-        try {
-            int emptyRoom = roomDB.getAmountEmptyRoom(roomType, reservationCheckIn.getValue(), reservationCheckOut.getValue());
-            int i = 1;
-            while (emptyRoom-- > 0) {
-                amountRoom.getItems().add(i++);
+
+
+        checkBox1.selectedProperty().addListener((observableValue, uncheck, checked) -> {
+            try {
+                int emptyRoom = roomDB.getAmountEmptyRoom(roomType, reservationCheckIn.getValue(), reservationCheckOut.getValue());
+                int i = 1;
+                if (emptyRoom != 0) {
+                    while (i <= emptyRoom)
+                        roomAmount.getItems().add(i++);
+                    roomAmount.getItems().sort(Comparator.naturalOrder());
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
 
-        // trigger the action when toggling the checkbox
-        checkBox.selectedProperty().addListener((observableValue, unchecked, checked) -> {
-            if (unchecked)
-                amountRoom.setDisable(true);
-            else {
-                amountRoom.setDisable(false);
-
-                if (amountRoom.getValue() == null)
-                    amountRoom.setValue(1);
-                else
-                    amountRoom.setValue(amountRoom.getValue());
-
-
+            if (checked) {
+                roomAmount.setDisable(roomAmount.getItems().isEmpty());
+                reservationCheckIn.setDisable(true);
+                reservationCheckOut.setDisable(true);
+            } else {
+                roomAmount.getItems().clear();
+                roomAmount.setValue(null);
+                roomAmount.setDisable(true);
+                if (checkBox2.isSelected() || checkBox3.isSelected() || checkBox4.isSelected()) {
+                    reservationCheckIn.setDisable(true);
+                    reservationCheckOut.setDisable(true);
+                } else if (!checkBox2.isSelected() && !checkBox3.isSelected() && !checkBox4.isSelected()) {
+                    reservationCheckIn.setDisable(false);
+                    reservationCheckOut.setDisable(false);
+                }
             }
-        });
+        } );
     }
 
-    /*private void setEmptyRoomAmount(ComboBox<Integer> comboBox, String roomType, DatePicker checkIn, DatePicker checkOut) {
-        int emptyRoom = roomDB.get
-    }*/
 }

@@ -23,8 +23,14 @@ public class CustomerDB implements Database{
         query = "SELECT * FROM customer ORDER BY checkin, roomNr ";
         return connection.createStatement().executeQuery(query);
     }
-    public ResultSet showBooking() throws SQLException {
+
+    /*public ResultSet showBooking() throws SQLException {
         query = "SELECT * FROM booking_customer ORDER BY checkin";
+        return connection.createStatement().executeQuery(query);
+    }*/
+
+    public ResultSet showAllBooking() throws SQLException {
+        query = "SELECT * FROM booking_customer";
         return connection.createStatement().executeQuery(query);
     }
 

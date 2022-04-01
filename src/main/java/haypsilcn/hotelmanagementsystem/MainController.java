@@ -79,8 +79,10 @@ public class MainController implements Initializable, Database {
                         alert.setContentText("Username and Password not macht!");
                         alert.showAndWait();
                     }
-                } catch (SQLException | AdminLoginAuthorize | AdminNotFound | IOException e) {
+                } catch (SQLException | IOException e) {
                     e.printStackTrace();
+                } catch (AdminLoginAuthorize | AdminNotFound e) {
+                    System.out.println(e);
                 }
             }
             else {

@@ -9,14 +9,25 @@ public class BookingCustomer {
     private String roomType;
     private String checkin;
     private String checkout;
+    private int roomAmount;
 
-    public BookingCustomer(String firstName, String lastName, String birthday, String gender, String roomType, String checkin, String checkout) {
+    public BookingCustomer(String firstName, String lastName, String birthday, String gender, String checkin, String checkout) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthday = birthday;
+        this.gender = gender;
+        this.checkin = checkin;
+        this.checkout = checkout;
+    }
+
+    public BookingCustomer(int id, String firstName, String lastName, String birthday, String gender, String roomType, int roomAmount, String checkin, String checkout) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthday = birthday;
         this.gender = gender;
         this.roomType = roomType;
+        this.roomAmount = roomAmount;
         this.checkin = checkin;
         this.checkout = checkout;
     }
@@ -83,5 +94,27 @@ public class BookingCustomer {
 
     public void setCheckout(String checkout) {
         this.checkout = checkout;
+    }
+
+    public int getRoomAmount() {
+        return roomAmount;
+    }
+
+    public void setRoomAmount(int roomAmount) {
+        this.roomAmount = roomAmount;
+    }
+
+    @Override
+    public String toString() {
+        return "BookingCustomer{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", gender='" + gender + '\'' +
+                ", roomType='" + roomType + '\'' +
+                ", checkin='" + checkin + '\'' +
+                ", checkout='" + checkout + '\'' +
+                '}';
     }
 }

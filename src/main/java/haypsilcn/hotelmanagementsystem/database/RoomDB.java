@@ -1,5 +1,6 @@
 package haypsilcn.hotelmanagementsystem.database;
 
+import haypsilcn.hotelmanagementsystem.customer.BookingCustomer;
 import haypsilcn.hotelmanagementsystem.customer.Customer;
 import haypsilcn.hotelmanagementsystem.exceptions.RoomAlreadyExist;
 import haypsilcn.hotelmanagementsystem.hotel.Room;
@@ -76,19 +77,69 @@ public class RoomDB implements Database{
     }
 
     public int getAmountEmptyRoom(String roomType, LocalDate checkIn, LocalDate checkOut) throws SQLException {
-        int busyRoom = 0;
-        int totalRoom = 0;
-        query = "SELECT COUNT(DISTINCT c.roomNr) FROM customer c JOIN room r ON r.roomNr = c.roomNr " +
-                "WHERE r.type = '" + roomType + "' AND c.checkin < '" + checkIn + "' AND c.checkout >= '" + checkOut + "'";
+        int bookedRoom = 0;
+        int checkedRoom = 0;
+        int totalEmptyRoom = 0;
+
+        query = "SELECT SUM(roomAmount) FROM booking_customer WHERE roomType = '" + roomType +
+                "' AND ((checkin < '" + checkIn + "' AND '" + checkIn + "' < checkout) " +
+                "OR (checkin < '" + checkOut + "' AND '" + checkOut + "' < checkout) " +
+                "OR (checkin = '" + checkIn + "' AND checkout = '" + checkOut + "')" +
+                "OR ('" + checkIn + "' < checkin AND checkin < '" + checkOut + "')" +
+                "OR ('" + checkIn + "' < checkout AND checkout < '" + checkOut + "'))";
+                resultSet = connection.createStatement().executeQuery(query);
+        if (resultSet.next())
+            bookedRoom = resultSet.getInt(1);
+
+        query = "SELECT COUNT(*) FROM customer c JOIN room r ON r.roomNr = c.roomNr " +
+                "WHERE r.type = '" + roomType + "' " +
+                "AND ((c.checkin < '" + checkIn + "' AND '" + checkIn + "' < c.checkout) " +
+                "OR (c.checkin < '" + checkOut + "' AND '" + checkOut + "' < c.checkout)" +
+                "OR (c.checkin = '" + checkIn + "' AND c.checkout = '" + checkOut + "')" +
+                "OR ('" + checkIn + "' < c.checkin AND c.checkin < '" + checkOut + "') " +
+                "OR ('" + checkIn + "' < c.checkout AND c.checkout < '" + checkOut + "'))";
         resultSet = connection.createStatement().executeQuery(query);
         if (resultSet.next())
-            busyRoom = resultSet.getInt(1);
+            checkedRoom = resultSet.getInt(1);
+
         query = "SELECT COUNT(type) FROM room WHERE type = '" + roomType + "'";
         resultSet = connection.createStatement().executeQuery(query);
         if (resultSet.next())
-            totalRoom = resultSet.getInt(1);
+            totalEmptyRoom = resultSet.getInt(1);
 
-        return (totalRoom - busyRoom);
+        return (totalEmptyRoom - bookedRoom - checkedRoom);
+    }
+
+    public boolean makeReservation(BookingCustomer bookingCustomer) throws SQLException {
+        int roomAmount;
+        query = "SELECT roomAmount FROM booking_customer WHERE first_name = '" + bookingCustomer.getFirstName() +
+                "' AND last_name = '" + bookingCustomer.getLastName() + "' AND birthday = '" + bookingCustomer.getBirthday() +
+                "' AND gender = '" + bookingCustomer.getGender() + "' AND roomType = '" + bookingCustomer.getRoomType() +
+                "' AND checkin = '" + bookingCustomer.getCheckin() + "' AND checkout = '" + bookingCustomer.getCheckout() + "'";
+        resultSet = connection.createStatement().executeQuery(query);
+        if (resultSet.next()) {
+            roomAmount = resultSet.getInt(1) + bookingCustomer.getRoomAmount();
+            query = "UPDATE booking_customer SET roomAmount = '" + roomAmount + "' " +
+                    "WHERE first_name = '" + bookingCustomer.getFirstName() + "' AND last_name = '" + bookingCustomer.getLastName() +
+                    "' AND birthday = '" + bookingCustomer.getBirthday() + "' AND gender = '" + bookingCustomer.getGender() +
+                    "' AND roomType = '" + bookingCustomer.getRoomType() + "' AND checkin = '" + bookingCustomer.getCheckin() +
+                    "' AND checkout = '" + bookingCustomer.getCheckout() + "'";
+            if (connection.createStatement().executeUpdate(query) > 0) {
+                System.out.println("Update reservation for " + bookingCustomer);
+                return true;
+            } else
+                return false;
+        } else {
+            query = "INSERT INTO booking_customer(first_name, last_name, birthday, gender, roomType, roomAmount, checkin, checkout) " +
+                    "VALUES ('" + bookingCustomer.getFirstName() + "', '" + bookingCustomer.getLastName() + "', '" +
+                    bookingCustomer.getBirthday() + "', '" + bookingCustomer.getGender() + "', '" + bookingCustomer.getRoomType() +
+                    "', '" + bookingCustomer.getRoomAmount() + "', '" + bookingCustomer.getCheckin() + "', '" + bookingCustomer.getCheckout() + "')";
+            if (connection.createStatement().executeUpdate(query) > 0) {
+                System.out.println("Make a reservation for " + bookingCustomer);
+                return true;
+            } else
+                return false;
+        }
     }
 
 }

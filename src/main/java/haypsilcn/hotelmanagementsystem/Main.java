@@ -47,9 +47,7 @@ public class Main {
         System.out.println(roomDB.getAmountEmptyRoom("Deluxe", LocalDate.now(), LocalDate.now().plusDays(1)));
         System.out.println(roomDB.getAmountEmptyRoom("Luxury", LocalDate.now(), LocalDate.now().plusDays(1)));*/
 
-        String         query = "SELECT DISTINCT roomNr FROM customer";
-        ResultSet resultSet = roomDB.getCheckOutRoom();
-        while (resultSet.next())
-            System.out.println(resultSet.getInt(1));
+        int room = roomDB.getAmountEmptyRoom("Single", LocalDate.now().plusDays(3), LocalDate.now().plusDays(9));
+        System.out.println(room);
     }
 }
