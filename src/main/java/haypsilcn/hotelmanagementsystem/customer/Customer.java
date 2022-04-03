@@ -1,6 +1,5 @@
 package haypsilcn.hotelmanagementsystem.customer;
 
-import haypsilcn.hotelmanagementsystem.hotel.Room;
 
 public class Customer {
 
@@ -96,5 +95,20 @@ public class Customer {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", gender='" + gender + '\'' +
+                ", room=" + room +
+                ", checkin='" + checkin + '\'' +
+                ", checkout='" + checkout + '\'' +
+                ", id=" + id +
+                '}';
     }
 }

@@ -12,6 +12,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.chrono.IsoEra;
 
@@ -34,7 +35,7 @@ public class Main {
         } catch (AdminAlreadyExists e) {
             System.out.println(e);
         }*/
-        LocalDate today = LocalDate.now();
+        LocalDate date = LocalDate.of(2012, 3, 14);
 
 //        String query = "SELECT COUNT(type) FROM room WHERE type = '" + "Deluxe" + "'";
         /*String query = "SELECT COUNT(DISTINCT c.roomNr) FROM customer c JOIN room r ON r.roomNr = c.roomNr WHERE r.type = '" + "Single" + "' AND c.checkout <= '" + today + "' ORDER BY r.type, c.checkin";
@@ -47,7 +48,10 @@ public class Main {
         System.out.println(roomDB.getAmountEmptyRoom("Deluxe", LocalDate.now(), LocalDate.now().plusDays(1)));
         System.out.println(roomDB.getAmountEmptyRoom("Luxury", LocalDate.now(), LocalDate.now().plusDays(1)));*/
 
-        int room = roomDB.getAmountEmptyRoom("Single", LocalDate.now().plusDays(3), LocalDate.now().plusDays(9));
-        System.out.println(room);
+        /*int room = roomDB.getAmountEmptyRoom("Single", LocalDate.now().plusDays(3), LocalDate.now().plusDays(9));
+        System.out.println(room);*/
+
+//        System.out.println(date);
+        System.out.println(LocalDate.parse("02/4/2004", DateTimeFormatter.ofPattern("d/M/yyyy")));
     }
 }
